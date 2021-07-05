@@ -125,8 +125,9 @@ export const ReadArticle = ({ selectedArticleToRead, setSwitch, setSelectedArtic
     console.log(watch('comment'))
 
     const handleClickReturn = () => {
+        
+        history.push(`/articles?selection=${selectedArticleToRead?.category}`)
         setSelectedArticleToRead(null!)
-        history.push(`/actividad3/articles?selection=${selectedArticleToRead?.category}`)
     }
 
     const addNewComment = async() => {

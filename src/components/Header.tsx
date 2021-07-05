@@ -1,10 +1,10 @@
 import React, { useState, Dispatch } from 'react'
 import { Link, useLocation, withRouter } from 'react-router-dom';
 import { useMediaQuery, Box, Container, Typography, AppBar, Tabs, Tab } from '@material-ui/core'
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles, Theme, createMuiTheme, ThemeProvider, responsiveFontSizes } from '@material-ui/core/styles';
 import { categories } from '../interfaces/interfaces'
 import { Articles } from './Articles'
-
+//FFFF-ZJDQVVVUXU
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -15,7 +15,8 @@ interface TabPanelProps {
 interface StateProps {
     headerTabValue: number,
     setHeaderTabValue: Dispatch<React.SetStateAction<number>>,
-    setSelectedCategory: Dispatch<React.SetStateAction<string | undefined>>
+    setSelectedCategory: Dispatch<React.SetStateAction<string>>
+    selectedCategory: string
 }
 
 function a11yProps(index: any) {
@@ -62,28 +63,31 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
 }))
 
-    const useQuery = () => {
-        return new URLSearchParams(useLocation().search);
-    }    
+let theme = createMuiTheme();
+theme = responsiveFontSizes(theme); 
 
-export const Header = ({headerTabValue, setHeaderTabValue,setSelectedCategory}: StateProps) => {
+export const Header = ({headerTabValue, setHeaderTabValue,setSelectedCategory, selectedCategory}: StateProps) => {
 
     const classes = useStyles();
-    let query = useQuery()
-
+    const { search } = useLocation();
+    const match = search.match(/selection=(.*)/);
+    const type = match?.[1];
+    console.log(selectedCategory)
+    console.log(type)
         
-
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-            setHeaderTabValue(newValue);
-            setSelectedCategory(categories[newValue])
+    const handleChange = (event: React.ChangeEvent<{}>, type: string) => {
+            console.log(event)
+            //setHeaderTabValue(newValue);
+            setSelectedCategory(type!!)
     };
     
 
     return (
+        <ThemeProvider theme={theme}>
         <Container>
             <Box textAlign='center'>
 
-            <Typography variant='h6' gutterBottom>
+            <Typography variant='h6' gutterBottom style={{color:'#f19225'}}>
                 <span style={{fontSize: '40px'}}>[</span>
                 Making your Life Easier
                 <span style={{fontSize: '40px'}}>]</span>
@@ -98,18 +102,18 @@ export const Header = ({headerTabValue, setHeaderTabValue,setSelectedCategory}: 
                     <Tabs 
                         className={classes.tabList}
                         value={headerTabValue} 
-                        onChange={handleChange} 
+                        onChange={(event)=>handleChange(event, type!!)} 
                         aria-label="simple tabs example"
                         variant="scrollable"
                         scrollButtons="off"
                         >
                     {
                         categories.map((category, index) => {
-                            
                             return(
+                                
                                 <Link 
                                     key={index} 
-                                    to={`/actividad3/articles?selection=${category}`}  
+                                    to={`/articles?selection=${category}`}  
                                     className={classes.link}
                                     >
                                     <Tab 
@@ -125,6 +129,7 @@ export const Header = ({headerTabValue, setHeaderTabValue,setSelectedCategory}: 
             </Box>
             
         </Container>
+        </ThemeProvider>
     )
 }
 
