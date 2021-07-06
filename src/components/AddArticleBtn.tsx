@@ -11,8 +11,9 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             position: 'fixed',
+            marginTop: 30,
             zIndex: 1,
-            left: '80%',
+            left: '90%',
             [theme.breakpoints.down('sm')]: {
                 left: '79%',
         }
@@ -62,7 +63,9 @@ export const AddArticleBtn = ({setShowAddArticle}: Props) => {
                 onMouseLeave={handleHover}
                 variant="extended" 
                 color="secondary" 
-                aria-label="edit" onClick={onClickHandle} className={classes.fab} >
+                aria-label="edit" 
+                onClick={onClickHandle} 
+                className={classes.fab} >
                 Add Article<EditIcon style={{paddingLeft:'2px'}}   onClick={onClickHandle} /> 
             </Fab> 
         :
@@ -71,8 +74,10 @@ export const AddArticleBtn = ({setShowAddArticle}: Props) => {
                 onMouseEnter={handleHover} 
                 onMouseLeave={handleHover}
                 color="secondary" 
-                aria-label="edit" onClick={onClickHandle} className={classes.fab} >
-                <EditIcon style={{paddingLeft:'2px'}}   onClick={onClickHandle} /> 
+                aria-label="edit" 
+                onClick={onClickHandle} 
+                className={classes.fab} >
+                <EditIcon style={{paddingLeft:'2px'}} onClick={onClickHandle} /> 
             </Fab>
         }
         </div>

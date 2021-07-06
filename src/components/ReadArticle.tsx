@@ -125,7 +125,6 @@ export const ReadArticle = ({ selectedArticleToRead, setSwitch, setSelectedArtic
     console.log(watch('comment'))
 
     const handleClickReturn = () => {
-        
         history.push(`/articles?selection=${selectedArticleToRead?.category}`)
         setSelectedArticleToRead(null!)
     }

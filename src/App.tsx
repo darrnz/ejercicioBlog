@@ -18,6 +18,7 @@ function App() {
     const [selectedArticleToRead, setSelectedArticleToRead] = useState<ArticleStruct>(null!)
     const [articlesResponse, setArticlesResponse] = useState<ArticlesList['posts']>([])
     const [switchAdd, setSwitch] = useState(false)
+    const [editArticleActive, setEditArticleActive] = useState<boolean>(false)
     console.log(selectedCategory)
 
     const getArticles = async() => {
@@ -35,8 +36,12 @@ function App() {
             return (<AddArticleModal 
                         setShowAddArticle={setShowAddArticle} 
                         showAddArticle={showAddArticle}
-                        articlesResponse={articlesResponse}
                         setArticlesResponse={setArticlesResponse}
+                        articlesResponse={articlesResponse}
+                        setEditArticleActive={setEditArticleActive}
+                        editArticleActive={editArticleActive}
+                        setSelectedArticleToRead={setSelectedArticleToRead}
+                        selectedArticleToRead={selectedArticleToRead}
                     />)
         }
     }
@@ -45,23 +50,29 @@ function App() {
         <Router>
         
             <AddArticleBtn setShowAddArticle={setShowAddArticle} />
+
             {showModalForm()}
             
-            {selectedArticleToRead == null? <Header 
-                headerTabValue={headerTabValue}
-                setHeaderTabValue={setHeaderTabValue}
-                setSelectedCategory={setSelectedCategory}
-                selectedCategory={selectedCategory}
-            /> : ''}
+            {
+                selectedArticleToRead == null ? 
+                    <Header 
+                        headerTabValue={headerTabValue}
+                        setHeaderTabValue={setHeaderTabValue}
+                        setSelectedCategory={setSelectedCategory}
+                        selectedCategory={selectedCategory}
+                    /> : ''
+            }
 
             <Switch>
                 <Route exact path={`/`} render={() => <Redirect to='/articles?selection=All'/>}/>
                 <Route exact path={`/articles`} render={
                     () => <Articles 
                         selectedCategory={selectedCategory}
+                        articlesResponse={articlesResponse}
                         setSelectedArticleToRead={setSelectedArticleToRead} 
                         setSelectedCategory={setSelectedCategory}
-                        articlesResponse={articlesResponse}
+                        setShowAddArticle={setShowAddArticle}
+                        setEditArticleActive={setEditArticleActive}
                         />}
                 />
                     

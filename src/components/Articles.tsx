@@ -1,17 +1,19 @@
 import React, { useEffect, useState, Dispatch } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
-import  { ReadArticle }  from './ReadArticle'
 import { categories, ArticleStruct, ArticlesList } from '../interfaces/interfaces'
 import { isWidthDown , CircularProgress, Grid, Typography, GridList, GridListTile, GridListTileBar, Container, IconButton, Box, Button,ButtonBase } from '@material-ui/core'
 import { makeStyles, Theme, createStyles, createMuiTheme} from '@material-ui/core/styles';
-import InfoIcon from '@material-ui/icons/Info'
 import ChatIcon from '@material-ui/icons/Chat';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 interface StateProps {
     selectedCategory: string
+    articlesResponse: ArticlesList['posts']
     setSelectedCategory: Dispatch<React.SetStateAction<string>>
     setSelectedArticleToRead: Dispatch<React.SetStateAction<ArticleStruct>> 
-    articlesResponse: ArticlesList['posts']
+    setShowAddArticle: Dispatch<React.SetStateAction<boolean>>
+    setEditArticleActive: Dispatch<React.SetStateAction<boolean>>
 }
 
 const useQuery = () => {
@@ -71,10 +73,13 @@ const useStyles = makeStyles((theme: Theme) =>
             },
             '&:hover':{
                opacity: 1,
-                '&.imgBackground':{
+                '& $imgBackground':{
                     transform: 'scale(1.1)',
                     transition: 'transform 6s cubic-bezier(0.25, 0.45, 0.45, 0.95)',
                 },
+                '& $crudBtn': {
+                    display: 'block'
+                }
             },
             position: 'relative',
         },
@@ -106,6 +111,9 @@ const useStyles = makeStyles((theme: Theme) =>
             whiteSpace: 'normal',
             lineHeight: 1.4,
             textShadow: '1.5px 1.5px #868686',
+            '&:hover':{
+                textDecoration: 'underline'
+            }
         },
         imgBackground: {
             margin: 0,
@@ -125,6 +133,24 @@ const useStyles = makeStyles((theme: Theme) =>
             whiteSpace: 'normal',
             fontSize: 20,
             textShadow: '1px 1px #868686',
+        },
+        crudBtn: {
+            //display: 'none',
+            color: '#fff',
+            textShadow: '2px 2px #474444',
+            fontSize: 25,
+            '&:hover': {
+                color: '#363535',
+            }
+        },
+        categoryAndCrud: {
+            width: '100%',
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center', 
+        }, 
+        infoCrud: {
+            fontSize: 25
         }
     }),
 );
@@ -143,36 +169,49 @@ const theme = createMuiTheme({
 //Json server -> API FAKE
 
 export const Articles = ({ 
-    selectedCategory, setSelectedCategory,
+    selectedCategory, 
+    setSelectedCategory,
     setSelectedArticleToRead,
-    articlesResponse 
+    articlesResponse, 
+    setShowAddArticle,
+    setEditArticleActive 
 }: StateProps) => {
 
     let query = useQuery();
     const { search } = useLocation();
     const classes = useStyles();
     const history = useHistory()
-
    // let columns = width === 'xs' || width === 'sm'  ? 1 : 2;
-
     const match = search.match(/selection=(.*)/);
     const type = match?.[1];
     console.log(selectedCategory)
+    //const actions: string[] = ['read', 'edit']
 
     useEffect(() => {
         
     }, [articlesResponse])
 
-    const handleSelectedArticleClick = (id:string, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        console.log(articlesResponse)
+    const handleSelectedArticleClick = (id:string, event: React.MouseEvent<HTMLButtonElement, MouseEvent>, actions: string) => {
+        console.log(actions)
         event.preventDefault()
         const readArticle = articlesResponse?.filter((article) => article.id === id)
         console.log(readArticle)
         setSelectedArticleToRead(readArticle[0])
-        history.push(`/articles/${id}`)
+        if(actions === 'read') {
+            history.push(`/articles/${id}`)
+        } else {
+            setEditArticleActive(true)
+            setShowAddArticle(true)
+        }
+
+        
+    }
+
+    const handleEditArticle = (id:string, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        event.preventDefault()
+
     }
     
-//<GridList  cols={1} cellHeight={250} className={classes.gridList} >
     return (
 
         <Grid  spacing={2} className={classes.rootGrid}>
@@ -195,13 +234,14 @@ export const Articles = ({
                                 >
                                 <div  className={classes.imgBackground} style={{backgroundImage: `url(${article && article.imgUrl})`}}/>
                                 <Box className={`${classes.titleBar}`}> 
-                                    <Typography 
-                                        variant='h5' 
-                                        className={classes.titleFromBar}
-                                        //classes={{title: classes.titleFromBar}}
-                                        >
-                                        {article.title}
-                                    </Typography>
+                                    <Button onClick={(event, actions='read') => handleSelectedArticleClick(article.id, event, actions)}>
+                                        <Typography 
+                                            variant='h5' 
+                                            className={classes.titleFromBar}
+                                            >
+                                            {article.title}
+                                        </Typography>
+                                    </Button>
                                     <Typography
                                         className={classes.subtitles} 
                                         variant='h5' 
@@ -220,13 +260,25 @@ export const Articles = ({
                                         >
                                         {article.content.slice(0,75)}...
                                     </Typography>
-                                    <Typography
-                                        className={classes.subtitles} 
-                                        variant='h5' 
-                                        >
-                                        {article.category.toUpperCase()}
-                                    </Typography>
-
+                                    <Box className={classes.categoryAndCrud}>
+                                        <Typography
+                                            className={classes.subtitles} 
+                                            variant='h5' 
+                                            >
+                                            {article.category.toUpperCase()}
+                                        </Typography>
+                                        <Box style={{marginRight: '5px'}}>
+                                            <IconButton
+                                                onClick={(event, actions='edit') => handleSelectedArticleClick(article.id, event, actions)}
+                                                className={classes.crudBtn}>
+                                                <EditIcon className={classes.infoCrud}/>
+                                            </IconButton>
+                                            <IconButton 
+                                                className={classes.crudBtn}>
+                                                <DeleteOutlineIcon className={classes.infoCrud}/>
+                                            </IconButton>
+                                        </Box>
+                                    </Box>        
                                 </Box> 
                             </Grid>
                     )

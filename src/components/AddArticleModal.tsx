@@ -11,6 +11,10 @@ interface Props {
     showAddArticle: boolean,
     articlesResponse: ArticleStruct[]
     setArticlesResponse: Dispatch<React.SetStateAction<ArticleStruct[]>>
+    editArticleActive: boolean,
+    setEditArticleActive: Dispatch<React.SetStateAction<boolean>>
+    selectedArticleToRead: ArticleStruct
+    setSelectedArticleToRead: Dispatch<React.SetStateAction<ArticleStruct>> 
 }
 
 function getModalStyle() {
@@ -55,8 +59,13 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export const AddArticleModal = ({ setShowAddArticle, showAddArticle, setArticlesResponse, articlesResponse } : Props) => {
-
+export const AddArticleModal = ({ 
+    setShowAddArticle, showAddArticle, 
+    setArticlesResponse, articlesResponse, 
+    setEditArticleActive, editArticleActive,
+    setSelectedArticleToRead, selectedArticleToRead 
+} : Props) => {
+    console.log(selectedArticleToRead)
     const classes = useStyles();
     const [modalStyle] = useState(getModalStyle);
     const [category, setCategory] = useState('');
@@ -64,6 +73,7 @@ export const AddArticleModal = ({ setShowAddArticle, showAddArticle, setArticles
 
     const { register, handleSubmit, control, watch, setValue, formState: { errors, isValid, dirtyFields, isDirty }, getValues } = useForm();
     console.log(watch())
+
     const handleOnClick = async() => {
         setValue('id', String(Math.floor(Math.random() * 90000) + 10000))
         setValue('author', `User${String(Math.floor(Math.random() * 90000) + 10000)}`)
@@ -79,16 +89,21 @@ export const AddArticleModal = ({ setShowAddArticle, showAddArticle, setArticles
         }).then(res => res.json())
 
         setArticlesResponse([...articlesResponse, newArticle])
-        
+    }
+
+    const hadleModalClose = () => {
+        setShowAddArticle(false)
+        setEditArticleActive(false)
+        setSelectedArticleToRead(null!)
     }
 
     
     return (
         <Modal
             open={showAddArticle}
-            onClose={()=> setShowAddArticle(false)}
+            onClose={hadleModalClose}
             aria-labelledby="simple-modal-title"
-            aria-describedby="simple-modal-description"
+            aria-describedby="simple-modal-de|scription"
         >
                 
             <Container style={modalStyle} className={classes.paper}>
@@ -100,12 +115,12 @@ export const AddArticleModal = ({ setShowAddArticle, showAddArticle, setArticles
                 <Grid item container xs >
                     <InputLabel style={{color: '#ff0000'}} required={true} focused={true}/>
                     <TextField
-                        
                         {...register('title', { required: true })}
                         type='text' 
                         name='title'
                         placeholder='Escribe el título'
                         fullWidth
+                        value={selectedArticleToRead?.title}
                         />
                     
                 </Grid>
@@ -165,13 +180,23 @@ export const AddArticleModal = ({ setShowAddArticle, showAddArticle, setArticles
                             Cancelar
                         </Button>
                         
-                        <Button type='submit'                        
+                        {
+                            editArticleActive === false ?
+                            <Button type='submit'                        
                                 variant="contained" 
                                 color="primary"
                                 disabled={!isValid}
-                        >
-                            Guardar
-                        </Button>
+                            >
+                                Guardar
+                            </Button>
+                        :
+                            <Button type='submit'                        
+                                variant="contained" 
+                                color="primary"
+                            >
+                                Editar
+                            </Button>
+                        }
                     </div>
                     {
                         isValid ?
