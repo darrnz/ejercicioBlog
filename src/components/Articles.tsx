@@ -10,6 +10,7 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 interface StateProps {
     selectedCategory: string
     articlesResponse: ArticlesList['posts']
+    setArticlesResponse:Dispatch<React.SetStateAction<ArticleStruct[]>>
     setSelectedCategory: Dispatch<React.SetStateAction<string>>
     setSelectedArticleToRead: Dispatch<React.SetStateAction<ArticleStruct>> 
     setShowAddArticle: Dispatch<React.SetStateAction<boolean>>
@@ -172,7 +173,7 @@ export const Articles = ({
     selectedCategory, 
     setSelectedCategory,
     setSelectedArticleToRead,
-    articlesResponse, 
+    articlesResponse, setArticlesResponse,
     setShowAddArticle,
     setEditArticleActive 
 }: StateProps) => {
@@ -203,14 +204,19 @@ export const Articles = ({
             setEditArticleActive(true)
             setShowAddArticle(true)
         }
+    }
 
+    const handleDeleteArticle = async(id:string, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        event.preventDefault()
+        const updatedList = articlesResponse.filter((article) => article.id !== id)
+        await fetch(`http://localhost:3004/posts/${id}`, {
+            method:'DELETE',
+            headers: { 'Content-Type': 'application/json'},
+        }).then(res => res.json())
+        setArticlesResponse([...updatedList])
         
     }
 
-    const handleEditArticle = (id:string, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        event.preventDefault()
-
-    }
     
     return (
 
@@ -274,6 +280,7 @@ export const Articles = ({
                                                 <EditIcon className={classes.infoCrud}/>
                                             </IconButton>
                                             <IconButton 
+                                                onClick={(event) =>handleDeleteArticle(article.id, event)}
                                                 className={classes.crudBtn}>
                                                 <DeleteOutlineIcon className={classes.infoCrud}/>
                                             </IconButton>

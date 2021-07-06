@@ -1,4 +1,4 @@
-import React, { Dispatch, useState } from 'react'
+import React, { Dispatch, useState, useEffect } from 'react'
 import { Modal, FormControl, Input, Select, MenuItem ,InputLabel, Typography, InputAdornment, TextField , Container, Button, Box, Grid, IconButton, Collapse, Checkbox   } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { useForm, Controller } from "react-hook-form"
@@ -69,7 +69,7 @@ export const AddArticleModal = ({
     setSelectedArticleToRead, selectedArticleToRead 
 } : Props) => {
 
-    console.log(selectedArticleToRead)
+    //console.log(selectedArticleToRead)
     console.log(editArticleActive)
     const classes = useStyles();
     const [modalStyle] = useState(getModalStyle);
@@ -90,7 +90,7 @@ export const AddArticleModal = ({
         setValue('comments', [])
         setValue('category', valueSelect)
         const { title, author, id, content, comments, imgUrl, category } = getValues()
-        setShowAddArticle(false);
+        hadleModalClose();
         let newArticle = await fetch('http://localhost:3004/posts', {
             method:'POST',
             headers: { 'Content-Type': 'application/json'},
@@ -108,6 +108,44 @@ export const AddArticleModal = ({
         setSelectedArticleToRead(null!)
     }
 
+    const handleEditArticle = async() => {
+        setValue('category', valueSelect)
+        const { title, content, imgUrl, category } = getValues()
+        setShowAddArticle(false);
+        let newArticle = await fetch(`http://localhost:3004/posts/${selectedArticleToRead.id}`, {
+            method:'PUT',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                ...selectedArticleToRead, title, content, imgUrl, category
+            })
+        }).then(res => res.json())
+
+        setArticlesResponse([...articlesResponse])
+        hadleModalClose()
+    }
+
+    const editArticle = () => {
+        if(editArticleActive) {
+            const fields = Object.keys(selectedArticleToRead)
+            console.log(fields)
+            /* fields.forEach((field) => {
+                setValue(field, selectedArticleToRead[field])
+            })  */
+            setValue('title', selectedArticleToRead.title)
+            setValue('content', selectedArticleToRead.content)
+            setValue('category', selectedArticleToRead.category)
+            setValue('imgUrl', selectedArticleToRead.imgUrl)
+            setValueSelect(selectedArticleToRead.category)
+        }
+    }
+
+    useEffect(() => {
+        editArticle()
+        
+    }, [])
+
+    const { title, content, imgUrl, category } = getValues()
+    console.log(title)
     
     return (
         <Modal
@@ -119,9 +157,9 @@ export const AddArticleModal = ({
                 
             <Container style={modalStyle} className={classes.paper}>
             <Typography component="h1" variant="h5" style={{textAlign:'center', marginTop: '5px'}} >
-                Agrega un artículo
+                {editArticleActive? 'Edita' : 'Agrega'} un artículo
             </Typography>
-            <form className={classes.form} onSubmit={handleSubmit(handleOnClick)}>
+            <form className={classes.form} onSubmit={editArticleActive? handleSubmit(handleEditArticle) : handleSubmit(handleOnClick)}>
             <Grid spacing={3} container alignItems="center" justify="center" direction="column">
                 <Grid item container xs >
                     <TextField
@@ -132,6 +170,7 @@ export const AddArticleModal = ({
                         fullWidth
                         required
                         label="Escribe el título"
+                        defaultValue={title}
                         />
                     
                 </Grid>
@@ -144,13 +183,15 @@ export const AddArticleModal = ({
                         placeholder='Escribe el contenido'
                         fullWidth
                         required
+                        defaultValue={content}
                         />
                 </Grid>
 
                 <Grid item container xs>
                     <FormControl className={classes.formControl} fullWidth >
                     <InputLabel>Selecciona la categoría</InputLabel>
-                        <Select 
+                        <Select
+                            //defaultValue={selectedArticleToRead?.category} 
                             value={valueSelect} 
                             required
                             onChange={handleChangeSelect}
@@ -173,6 +214,7 @@ export const AddArticleModal = ({
                             endAdornment:<InputAdornment position="end"><LinkIcon/></InputAdornment>
                         }}
                         required
+                        defaultValue={selectedArticleToRead?.imgUrl} 
                         />
                 </Grid>
                 <Grid item container lg direction='column' >  
@@ -191,8 +233,8 @@ export const AddArticleModal = ({
                             Cancelar
                         </Button>
                         
-                        {/* {
-                            editArticleActive === false ? */}
+                        {
+                            editArticleActive === false ?
                             <Button 
                                 type='submit'                        
                                 variant="contained" 
@@ -201,14 +243,14 @@ export const AddArticleModal = ({
                             >
                                 Guardar
                             </Button>
-                        {/* :
+                        :
                             <Button type='submit'                        
                                 variant="contained" 
                                 color="primary"
                             >
                                 Editar
                             </Button>
-                        }*/}
+                        }
                     </div> 
                     {
                         isValid ?

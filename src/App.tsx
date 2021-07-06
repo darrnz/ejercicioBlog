@@ -69,9 +69,10 @@ function App() {
                 <Route exact path={`/articles`} render={
                     () => <Articles 
                         selectedCategory={selectedCategory}
-                        articlesResponse={articlesResponse}
-                        setSelectedArticleToRead={setSelectedArticleToRead} 
                         setSelectedCategory={setSelectedCategory}
+                        articlesResponse={articlesResponse}
+                        setArticlesResponse={setArticlesResponse}
+                        setSelectedArticleToRead={setSelectedArticleToRead} 
                         setShowAddArticle={setShowAddArticle}
                         setEditArticleActive={setEditArticleActive}
                         />}

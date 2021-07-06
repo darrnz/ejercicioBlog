@@ -2,7 +2,7 @@
   "posts": [
     {
       "title": "Vel quam elementum pulvinar etiam non.",
-      "category": "Travel",
+      "category": "Lifestyle",
       "content": "Vel quam elementum pulvinar etiam non. Consectetur adipiscing elit pellentesque habitant morbi. Dignissim diam quis enim lobortis. Morbi tincidunt augue interdum velit euismod in. Auctor urna nunc id cursus metus aliquam eleifend. Sagittis aliquam malesuada bibendum arcu vitae elementum curabitur vitae nunc. Volutpat ac tincidunt vitae semper quis lectus nulla at. Amet venenatis urna cursus eget nunc. Faucibus et molestie ac feugiat sed lectus. Enim praesent elementum facilisis leo vel fringilla est ullamcorper eget. Lacus viverra vitae congue eu consequat. Ac tortor vitae purus faucibus ornare suspendisse sed nisi lacus. Pellentesque habitant morbi tristique senectus et netus et malesuada. Dolor sit amet consectetur adipiscing elit duis tristique.",
       "imgUrl": "https://th.bing.com/th/id/OIP.KyuYNSYvT9c6TLoLSrnRngHaE7?pid=ImgDet&rs=1",
       "id": "45678",
@@ -320,42 +320,6 @@
     },
     {
       "title": "Hola",
-      "author": "User91257",
-      "id": "77163",
-      "content": "Holahola",
-      "comments": [],
-      "imgUrl": "https://www.italymagazine.com/sites/default/files/feature-story/leader/bigstock-plane-travel-concept-hand-hol-250149976.jpg",
-      "category": "Travel"
-    },
-    {
-      "title": "sdfsdf",
-      "author": "User36762",
-      "id": "71709",
-      "content": "sdfsdf",
-      "comments": [],
-      "imgUrl": "https://www.italymagazine.com/sites/default/files/feature-story/leader/bigstock-plane-travel-concept-hand-hol-250149976.jpg",
-      "category": "Travel"
-    },
-    {
-      "title": "sdfsdf",
-      "author": "User70585",
-      "id": "79349",
-      "content": "Holahola",
-      "comments": [],
-      "imgUrl": "https://www.italymagazine.com/sites/default/files/feature-story/leader/bigstock-plane-travel-concept-hand-hol-250149976.jpg",
-      "category": "Travel"
-    },
-    {
-      "title": "sdfsdf",
-      "author": "User71703",
-      "id": "38702",
-      "content": "sdfsdf",
-      "comments": [],
-      "imgUrl": "https://www.italymagazine.com/sites/default/files/feature-story/leader/bigstock-plane-travel-concept-hand-hol-250149976.jpg",
-      "category": "Lifestyle"
-    },
-    {
-      "title": "Hola",
       "author": "User16577",
       "id": "18736",
       "content": "Holahola",
@@ -389,6 +353,15 @@
       "comments": [],
       "imgUrl": "https://th.bing.com/th/id/OIP.M3Vd2Vb6SimAJtzWy3YlzwHaE4?pid=ImgDet&w=800&h=528&rs=1",
       "category": "Business"
+    },
+    {
+      "title": "Hola",
+      "author": "User73100",
+      "id": "37589",
+      "content": "Holahola",
+      "comments": [],
+      "imgUrl": "https://www.italymagazine.com/sites/default/files/feature-story/leader/bigstock-plane-travel-concept-hand-hol-250149976.jpg",
+      "category": "Lifestyle"
     }
   ]
 }
