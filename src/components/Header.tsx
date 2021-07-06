@@ -3,8 +3,6 @@ import { Link, useLocation, withRouter } from 'react-router-dom';
 import { useMediaQuery, Box, Container, Typography, AppBar, Tabs, Tab } from '@material-ui/core'
 import { makeStyles, Theme, createMuiTheme, ThemeProvider, responsiveFontSizes } from '@material-ui/core/styles';
 import { categories } from '../interfaces/interfaces'
-import { Articles } from './Articles'
-//FFFF-ZJDQVVVUXU
 
 interface TabPanelProps {
     children?: React.ReactNode;

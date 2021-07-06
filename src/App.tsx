@@ -1,11 +1,11 @@
 import './App.css';
 import React, { useState, useEffect } from 'react'
-import { BrowserRouter as Router,Route, Switch, useLocation, Link, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router,Route, Switch, Redirect } from 'react-router-dom'
 import  {Header}  from './components/Header'
 import { AddArticleModal } from './components/AddArticleModal'
 import { Articles } from './components/Articles'
 import { AddArticleBtn } from './components/AddArticleBtn'
-import { categories, ArticleStruct, ArticlesList } from './interfaces/interfaces'
+import { ArticleStruct, ArticlesList } from './interfaces/interfaces'
 import { ReadArticle } from './components/ReadArticle'
 //npx json-server --watch db.json --port 3004
 

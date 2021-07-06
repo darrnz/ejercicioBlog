@@ -1,8 +1,7 @@
 import React, { Dispatch, useState, useEffect } from 'react'
-import { Modal, FormControl, Input, Select, MenuItem ,InputLabel, Typography, InputAdornment, TextField , Container, Button, Box, Grid, IconButton, Collapse, Checkbox   } from '@material-ui/core';
+import { Modal, FormControl, Select, MenuItem ,InputLabel, Typography, InputAdornment, TextField , Container, Button, Grid } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
-import { useForm, Controller } from "react-hook-form"
-import CloseIcon from '@material-ui/icons/Close'
+import { useForm } from "react-hook-form"
 import LinkIcon from '@material-ui/icons/Link';
 import { categories, ArticleStruct } from '../interfaces/interfaces'
 
@@ -76,7 +75,7 @@ export const AddArticleModal = ({
     //const [category, setCategory] = useState('');
     const [valueSelect, setValueSelect] = useState('')
 
-    const { register, handleSubmit, control, watch, setValue, formState: { errors, isValid, dirtyFields, isDirty, isSubmitting }, getValues } = useForm({mode: "onChange"});
+    const { register, handleSubmit, watch, setValue, formState: { errors, isValid, dirtyFields, isDirty, isSubmitting }, getValues } = useForm({mode: "onChange"});
     console.log(valueSelect)
     console.log(watch())
 

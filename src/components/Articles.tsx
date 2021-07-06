@@ -1,7 +1,7 @@
-import React, { useEffect, useState, Dispatch } from 'react'
+import React, { useEffect, Dispatch } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
-import { categories, ArticleStruct, ArticlesList } from '../interfaces/interfaces'
-import { isWidthDown , CircularProgress, Grid, Typography, GridList, GridListTile, GridListTileBar, Container, IconButton, Box, Button,ButtonBase } from '@material-ui/core'
+import { ArticleStruct, ArticlesList } from '../interfaces/interfaces'
+import { isWidthDown , CircularProgress, Grid, Typography, IconButton, Box, Button } from '@material-ui/core'
 import { makeStyles, Theme, createStyles, createMuiTheme} from '@material-ui/core/styles';
 import ChatIcon from '@material-ui/icons/Chat';
 import EditIcon from '@material-ui/icons/Edit';
