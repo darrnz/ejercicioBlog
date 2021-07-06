@@ -56,6 +56,9 @@ const useStyles = makeStyles((theme: Theme) =>
             margin: theme.spacing(1),
             minWidth: 120,
         },
+        asterisk:{
+            color: '#f00000'
+        }
     }),
 );
 
@@ -65,19 +68,27 @@ export const AddArticleModal = ({
     setEditArticleActive, editArticleActive,
     setSelectedArticleToRead, selectedArticleToRead 
 } : Props) => {
+
     console.log(selectedArticleToRead)
+    console.log(editArticleActive)
     const classes = useStyles();
     const [modalStyle] = useState(getModalStyle);
-    const [category, setCategory] = useState('');
+    //const [category, setCategory] = useState('');
+    const [valueSelect, setValueSelect] = useState('')
 
-
-    const { register, handleSubmit, control, watch, setValue, formState: { errors, isValid, dirtyFields, isDirty }, getValues } = useForm();
+    const { register, handleSubmit, control, watch, setValue, formState: { errors, isValid, dirtyFields, isDirty, isSubmitting }, getValues } = useForm({mode: "onChange"});
+    console.log(valueSelect)
     console.log(watch())
+
+    const handleChangeSelect = (event: React.ChangeEvent<{ value: unknown }>) => {
+        setValueSelect(event.target.value as string);
+      };
 
     const handleOnClick = async() => {
         setValue('id', String(Math.floor(Math.random() * 90000) + 10000))
         setValue('author', `User${String(Math.floor(Math.random() * 90000) + 10000)}`)
         setValue('comments', [])
+        setValue('category', valueSelect)
         const { title, author, id, content, comments, imgUrl, category } = getValues()
         setShowAddArticle(false);
         let newArticle = await fetch('http://localhost:3004/posts', {
@@ -113,55 +124,55 @@ export const AddArticleModal = ({
             <form className={classes.form} onSubmit={handleSubmit(handleOnClick)}>
             <Grid spacing={3} container alignItems="center" justify="center" direction="column">
                 <Grid item container xs >
-                    <InputLabel style={{color: '#ff0000'}} required={true} focused={true}/>
                     <TextField
                         {...register('title', { required: true })}
                         type='text' 
                         name='title'
                         placeholder='Escribe el título'
                         fullWidth
-                        value={selectedArticleToRead?.title}
+                        required
+                        label="Escribe el título"
                         />
                     
                 </Grid>
-                <Grid item container xs>
-                    <InputLabel style={{color: '#ff0000'}} required={true} focused={true} />    
+                <Grid item container xs> 
                     <TextField
+                        label="Escribe el contenido"
                         {...register('content', { required: true })}
                         type='text' 
                         name='content'
                         placeholder='Escribe el contenido'
                         fullWidth
+                        required
                         />
                 </Grid>
 
                 <Grid item container xs>
-                    <FormControl className={classes.formControl} fullWidth > 
-                        <Controller
-                            name='category'
-                            control={control}
-                            render={({ field }) => 
-                                <Select {...field} color="primary" value={category} displayEmpty placeholder='Selecciona la categoría'>
-                                        <MenuItem value="" disabled>None</MenuItem>
-                                        {
-                                        categories.map((category, index) => <MenuItem key={index} value={category}>{category}</MenuItem>)
-                                        }
-                                </Select>
-                            }
-                        />
+                    <FormControl className={classes.formControl} fullWidth >
+                    <InputLabel>Selecciona la categoría</InputLabel>
+                        <Select 
+                            value={valueSelect} 
+                            required
+                            onChange={handleChangeSelect}
+                            label='Selecciona la categoría'>
+                                {
+                                categories.map((category, index) => <MenuItem key={index} value={category}>{category}</MenuItem>)
+                                }
+                        </Select>
                     </FormControl>
                 </Grid>
-                <Grid item container xs>
-                    <InputLabel style={{color: '#ff0000'}} required={true} focused={true} />    
+                <Grid item container xs>  
                     <TextField
                         {...register('imgUrl', { required: true })}
                         type='text' 
                         name='imgUrl'
                         placeholder='Agrega el link de la imagen'
+                        label='Agrega el link de la imagen'
                         fullWidth
                         InputProps={{
                             endAdornment:<InputAdornment position="end"><LinkIcon/></InputAdornment>
                         }}
+                        required
                         />
                 </Grid>
                 <Grid item container lg direction='column' >  
@@ -175,29 +186,30 @@ export const AddArticleModal = ({
                         <Button type='submit'                        
                                 variant="contained" 
                                 color="secondary"
-                                onClick={()=>setShowAddArticle(false)}
+                                onClick={hadleModalClose}
                         >
                             Cancelar
                         </Button>
                         
-                        {
-                            editArticleActive === false ?
-                            <Button type='submit'                        
+                        {/* {
+                            editArticleActive === false ? */}
+                            <Button 
+                                type='submit'                        
                                 variant="contained" 
                                 color="primary"
                                 disabled={!isValid}
                             >
                                 Guardar
                             </Button>
-                        :
+                        {/* :
                             <Button type='submit'                        
                                 variant="contained" 
                                 color="primary"
                             >
                                 Editar
                             </Button>
-                        }
-                    </div>
+                        }*/}
+                    </div> 
                     {
                         isValid ?
                         '' :

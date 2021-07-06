@@ -20,6 +20,7 @@ function App() {
     const [switchAdd, setSwitch] = useState(false)
     const [editArticleActive, setEditArticleActive] = useState<boolean>(false)
     console.log(selectedCategory)
+    console.log(editArticleActive)
 
     const getArticles = async() => {
         let responseSer = await fetch('http://localhost:3004/posts')
