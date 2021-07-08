@@ -2,7 +2,7 @@ import React, { useEffect, Dispatch } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
 import { ArticleStruct, ArticlesList } from '../interfaces/interfaces'
 import { isWidthDown , CircularProgress, Grid, Typography, IconButton, Box, Button } from '@material-ui/core'
-import { makeStyles, Theme, createStyles, createMuiTheme} from '@material-ui/core/styles';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import ChatIcon from '@material-ui/icons/Chat';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
@@ -16,12 +16,6 @@ interface StateProps {
     setShowAddArticle: Dispatch<React.SetStateAction<boolean>>
     setEditArticleActive: Dispatch<React.SetStateAction<boolean>>
 }
-
-const useQuery = () => {
-    console.log(useLocation())
-    return new URLSearchParams(useLocation().search);
-}
-
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -65,15 +59,14 @@ const useStyles = makeStyles((theme: Theme) =>
             flex: '1',
             display: 'flex',
             overflow:'hidden',
-             opacity: 0.8,
+            opacity: 0.8,
             [theme.breakpoints.down('sm')]: {
                 display: 'flex',
                 width: 100,
                 fontSize: 10,
-                border: 'solid'
             },
             '&:hover':{
-               opacity: 1,
+                opacity: 1,
                 '& $imgBackground':{
                     transform: 'scale(1.1)',
                     transition: 'transform 6s cubic-bezier(0.25, 0.45, 0.45, 0.95)',
@@ -102,7 +95,7 @@ const useStyles = makeStyles((theme: Theme) =>
             alignItems: 'flex-start'
         },
         titleFromBar: {
-            fontSize: 35,
+            fontSize: 27,
             top:30,
             paddingBottom: 7,
             textAlign: 'left',
@@ -111,10 +104,13 @@ const useStyles = makeStyles((theme: Theme) =>
             color: '#fff',
             whiteSpace: 'normal',
             lineHeight: 1.4,
-            textShadow: '1.5px 1.5px #868686',
+            textShadow: '2px 2px #252323',
             '&:hover':{
                 textDecoration: 'underline'
-            }
+            },
+            [theme.breakpoints.down('sm')]: {
+                fontSize: 21,
+            },
         },
         imgBackground: {
             margin: 0,
@@ -134,12 +130,16 @@ const useStyles = makeStyles((theme: Theme) =>
             whiteSpace: 'normal',
             fontSize: 20,
             textShadow: '1px 1px #868686',
+            [theme.breakpoints.down('sm')]: {
+                fontSize: 15,
+            },
         },
         crudBtn: {
-            //display: 'none',
-            color: '#fff',
-            textShadow: '2px 2px #474444',
-            fontSize: 25,
+            display: 'none',
+            color: '#dadada',
+            textShadow: '2px 2px #161515',
+            border: 'solid 1px',
+            borderRadius: '50%',
             '&:hover': {
                 color: '#363535',
             }
@@ -151,23 +151,13 @@ const useStyles = makeStyles((theme: Theme) =>
             alignItems: 'center', 
         }, 
         infoCrud: {
-            fontSize: 25
+            fontSize: 25,
+            [theme.breakpoints.down('sm')]: {
+                fontSize: 18,
+            },
         }
     }),
 );
-
-const theme = createMuiTheme({
-    props: {
-      // withWidth component ⚛️
-      MuiWithWidth: {
-        // Initial width property
-        initialWidth: 'lg', // Breakpoint being globally set 🌎!
-      },
-    },
-  });
-
-//mostrar articulo en ruta independiente
-//Json server -> API FAKE
 
 export const Articles = ({ 
     selectedCategory, 
@@ -178,7 +168,6 @@ export const Articles = ({
     setEditArticleActive 
 }: StateProps) => {
 
-    let query = useQuery();
     const { search } = useLocation();
     const classes = useStyles();
     const history = useHistory()
@@ -219,9 +208,7 @@ export const Articles = ({
 
     
     return (
-
-        <Grid  spacing={2} className={classes.rootGrid}>
-            
+        <Grid className={classes.rootGrid}>
             {
                 articlesResponse == null ?  
                     <div className={classes.root}>
@@ -252,13 +239,16 @@ export const Articles = ({
                                         className={classes.subtitles} 
                                         variant='h5' 
                                         >
-                                        {<>
-                                        
-                                        {article.comments.length <= 0 ? 
-                                            '' : 
-                                            <span className={classes.subtitles}>{article.comments.length} <ChatIcon style={{ fontSize: 15 }} /> Comments</span> 
+                                        {
+                                        <>
+                                            {article.comments.length <= 0 ? 
+                                                '' : 
+                                                <span className={classes.subtitles}>{article.comments.length} 
+                                                    <ChatIcon style={{ fontSize: 15 }} /> Comments
+                                                </span> 
+                                            }
+                                        </>
                                         }
-                                        </>}
                                     </Typography>
                                     <Typography
                                         className={classes.subtitles} 
@@ -266,6 +256,7 @@ export const Articles = ({
                                         >
                                         {article.content.slice(0,75)}...
                                     </Typography>
+                                    
                                     <Box className={classes.categoryAndCrud}>
                                         <Typography
                                             className={classes.subtitles} 
@@ -285,7 +276,8 @@ export const Articles = ({
                                                 <DeleteOutlineIcon className={classes.infoCrud}/>
                                             </IconButton>
                                         </Box>
-                                    </Box>        
+                                    </Box> 
+                                    
                                 </Box> 
                             </Grid>
                     )

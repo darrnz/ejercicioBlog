@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme: Theme) =>
             position: 'absolute',
             width: 350,
             backgroundColor: theme.palette.background.paper,
-            border: '2px solid #000',
             boxShadow: theme.shadows[5],
             padding: theme.spacing(2, 4, 3),
         },
@@ -68,20 +67,19 @@ export const AddArticleModal = ({
     setSelectedArticleToRead, selectedArticleToRead 
 } : Props) => {
 
-    //console.log(selectedArticleToRead)
-    console.log(editArticleActive)
+    console.log(selectedArticleToRead)
     const classes = useStyles();
     const [modalStyle] = useState(getModalStyle);
     //const [category, setCategory] = useState('');
     const [valueSelect, setValueSelect] = useState('')
 
-    const { register, handleSubmit, watch, setValue, formState: { errors, isValid, dirtyFields, isDirty, isSubmitting }, getValues } = useForm({mode: "onChange"});
+    const { register, handleSubmit, control, watch, setValue, formState: { isValid, dirtyFields, isDirty}, getValues } = useForm({mode: "onChange"});
     console.log(valueSelect)
     console.log(watch())
 
     const handleChangeSelect = (event: React.ChangeEvent<{ value: unknown }>) => {
         setValueSelect(event.target.value as string);
-      };
+    };
 
     const handleOnClick = async() => {
         setValue('id', String(Math.floor(Math.random() * 90000) + 10000))
@@ -111,7 +109,7 @@ export const AddArticleModal = ({
         setValue('category', valueSelect)
         const { title, content, imgUrl, category } = getValues()
         setShowAddArticle(false);
-        let newArticle = await fetch(`http://localhost:3004/posts/${selectedArticleToRead.id}`, {
+        await fetch(`http://localhost:3004/posts/${selectedArticleToRead.id}`, {
             method:'PUT',
             headers: { 'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -124,7 +122,6 @@ export const AddArticleModal = ({
     }
 
     const editArticle = () => {
-        if(editArticleActive) {
             const fields = Object.keys(selectedArticleToRead)
             console.log(fields)
             /* fields.forEach((field) => {
@@ -135,16 +132,16 @@ export const AddArticleModal = ({
             setValue('category', selectedArticleToRead.category)
             setValue('imgUrl', selectedArticleToRead.imgUrl)
             setValueSelect(selectedArticleToRead.category)
-        }
     }
 
     useEffect(() => {
-        editArticle()
-        
+        if(editArticleActive) {
+            editArticle()
+        }
     }, [])
 
     const { title, content, imgUrl, category } = getValues()
-    console.log(title)
+    console.log(watch('category'))
     
     return (
         <Modal
@@ -155,9 +152,11 @@ export const AddArticleModal = ({
         >
                 
             <Container style={modalStyle} className={classes.paper}>
+
             <Typography component="h1" variant="h5" style={{textAlign:'center', marginTop: '5px'}} >
                 {editArticleActive? 'Edita' : 'Agrega'} un artículo
             </Typography>
+
             <form className={classes.form} onSubmit={editArticleActive? handleSubmit(handleEditArticle) : handleSubmit(handleOnClick)}>
             <Grid spacing={3} container alignItems="center" justify="center" direction="column">
                 <Grid item container xs >
@@ -213,6 +212,7 @@ export const AddArticleModal = ({
                             endAdornment:<InputAdornment position="end"><LinkIcon/></InputAdornment>
                         }}
                         required
+                        
                         defaultValue={selectedArticleToRead?.imgUrl} 
                         />
                 </Grid>
@@ -261,6 +261,7 @@ export const AddArticleModal = ({
                 </Grid>
             </Grid>
             </form>
+
             </Container>
         </Modal>
     )
