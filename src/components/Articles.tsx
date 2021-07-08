@@ -135,8 +135,8 @@ const useStyles = makeStyles((theme: Theme) =>
             },
         },
         crudBtn: {
-            display: 'none',
-            color: '#dadada',
+            //display: 'none',
+            
             textShadow: '2px 2px #161515',
             border: 'solid 1px',
             borderRadius: '50%',
@@ -265,15 +265,16 @@ export const Articles = ({
                                             {article.category.toUpperCase()}
                                         </Typography>
                                         <Box style={{marginRight: '5px'}}>
-                                            <IconButton
+                                            <IconButton 
+                                                style={{color: '#fff176'}}
                                                 onClick={(event, actions='edit') => handleSelectedArticleClick(article.id, event, actions)}
                                                 className={classes.crudBtn}>
-                                                <EditIcon className={classes.infoCrud}/>
+                                                <EditIcon style={{color: '#fff176'}} className={classes.infoCrud}/>
                                             </IconButton>
-                                            <IconButton 
+                                            <IconButton color="secondary"
                                                 onClick={(event) =>handleDeleteArticle(article.id, event)}
                                                 className={classes.crudBtn}>
-                                                <DeleteOutlineIcon className={classes.infoCrud}/>
+                                                <DeleteOutlineIcon  className={classes.infoCrud}/>
                                             </IconButton>
                                         </Box>
                                     </Box> 
