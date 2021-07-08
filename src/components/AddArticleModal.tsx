@@ -1,7 +1,7 @@
 import React, { Dispatch, useState, useEffect } from 'react'
-import { Modal, FormControl, Select, MenuItem ,InputLabel, Typography, InputAdornment, TextField , Container, Button, Grid } from '@material-ui/core';
+import { Modal, FormControl, Select, MenuItem ,InputLabel, Typography, InputAdornment, TextField , Container, Button, Grid, Box } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
-import { useForm } from "react-hook-form"
+import { useForm, Controller } from "react-hook-form"
 import LinkIcon from '@material-ui/icons/Link';
 import { categories, ArticleStruct } from '../interfaces/interfaces'
 
@@ -70,22 +70,15 @@ export const AddArticleModal = ({
     console.log(selectedArticleToRead)
     const classes = useStyles();
     const [modalStyle] = useState(getModalStyle);
-    //const [category, setCategory] = useState('');
-    const [valueSelect, setValueSelect] = useState('')
+    //const [category, setCategory] = useState('')
 
-    const { register, handleSubmit, control, watch, setValue, formState: { isValid, dirtyFields, isDirty}, getValues } = useForm({mode: "onChange"});
-    console.log(valueSelect)
+    const { handleSubmit, control, watch, setValue, formState: { isValid }, getValues } = useForm({mode: "onChange"});
     console.log(watch())
-
-    const handleChangeSelect = (event: React.ChangeEvent<{ value: unknown }>) => {
-        setValueSelect(event.target.value as string);
-    };
 
     const handleOnClick = async() => {
         setValue('id', String(Math.floor(Math.random() * 90000) + 10000))
         setValue('author', `User${String(Math.floor(Math.random() * 90000) + 10000)}`)
         setValue('comments', [])
-        setValue('category', valueSelect)
         const { title, author, id, content, comments, imgUrl, category } = getValues()
         hadleModalClose();
         let newArticle = await fetch('http://localhost:3004/posts', {
@@ -106,17 +99,20 @@ export const AddArticleModal = ({
     }
 
     const handleEditArticle = async() => {
-        setValue('category', valueSelect)
         const { title, content, imgUrl, category } = getValues()
         setShowAddArticle(false);
-        await fetch(`http://localhost:3004/posts/${selectedArticleToRead.id}`, {
+        const responseUpdate = await fetch(`http://localhost:3004/posts/${selectedArticleToRead.id}`, {
             method:'PUT',
             headers: { 'Content-Type': 'application/json'},
             body: JSON.stringify({
                 ...selectedArticleToRead, title, content, imgUrl, category
             })
         }).then(res => res.json())
-
+        console.log(responseUpdate)
+        const updatedArticle = articlesResponse.findIndex(article => article.id === responseUpdate.id)
+        console.log(updatedArticle)
+        articlesResponse[updatedArticle] = responseUpdate
+        //console.log(updatedList)
         setArticlesResponse([...articlesResponse])
         hadleModalClose()
     }
@@ -131,7 +127,6 @@ export const AddArticleModal = ({
             setValue('content', selectedArticleToRead.content)
             setValue('category', selectedArticleToRead.category)
             setValue('imgUrl', selectedArticleToRead.imgUrl)
-            setValueSelect(selectedArticleToRead.category)
     }
 
     useEffect(() => {
@@ -139,9 +134,6 @@ export const AddArticleModal = ({
             editArticle()
         }
     }, [])
-
-    const { title, content, imgUrl, category } = getValues()
-    console.log(watch('category'))
     
     return (
         <Modal
@@ -160,64 +152,79 @@ export const AddArticleModal = ({
             <form className={classes.form} onSubmit={editArticleActive? handleSubmit(handleEditArticle) : handleSubmit(handleOnClick)}>
             <Grid spacing={3} container alignItems="center" justify="center" direction="column">
                 <Grid item container xs >
-                    <TextField
-                        {...register('title', { required: true })}
-                        type='text' 
+                    <Controller 
                         name='title'
-                        placeholder='Escribe el título'
-                        fullWidth
-                        required
-                        label="Escribe el título"
-                        defaultValue={title}
-                        />
+                        control={control}
+                        render={({ field }) => <TextField
+                            {...field}
+                            type='text' 
+                            placeholder='Escribe el título'
+                            fullWidth
+                            required
+                            label="Escribe el título"
+                            defaultValue={selectedArticleToRead?.title}
+                            />
+                        }
+                    />
+
                     
                 </Grid>
                 <Grid item container xs> 
-                    <TextField
-                        label="Escribe el contenido"
-                        {...register('content', { required: true })}
-                        type='text' 
+                    <Controller 
                         name='content'
-                        placeholder='Escribe el contenido'
-                        fullWidth
-                        required
-                        defaultValue={content}
-                        />
+                        control={control}
+                        render={({ field }) => <TextField
+                            {...field}
+                            label="Escribe el contenido"
+                            type='text' 
+                            placeholder='Escribe el contenido'
+                            fullWidth
+                            required
+                            defaultValue={selectedArticleToRead?.content}
+                            />
+                        }        
+                    />
                 </Grid>
-
                 <Grid item container xs>
                     <FormControl className={classes.formControl} fullWidth >
                     <InputLabel>Selecciona la categoría</InputLabel>
-                        <Select
-                            //defaultValue={selectedArticleToRead?.category} 
-                            value={valueSelect} 
-                            required
-                            onChange={handleChangeSelect}
-                            label='Selecciona la categoría'>
-                                {
-                                categories.map((category, index) => <MenuItem key={index} value={category}>{category}</MenuItem>)
-                                }
-                        </Select>
+                        <Controller 
+                            name='category'
+                            control={control}
+                            render={({field}) => <Select
+                                defaultValue={selectedArticleToRead?.category} 
+                                {...field}
+                                required
+                                label='Selecciona la categoría'>
+                                    {
+                                        categories.map((category, index) => <MenuItem key={index} value={category}>{category}</MenuItem>)
+                                    }
+                                </Select>
+                            }
+                        />
                     </FormControl>
                 </Grid>
                 <Grid item container xs>  
-                    <TextField
-                        {...register('imgUrl', { required: true })}
-                        type='text' 
+                    <Controller 
                         name='imgUrl'
-                        placeholder='Agrega el link de la imagen'
-                        label='Agrega el link de la imagen'
-                        fullWidth
-                        InputProps={{
-                            endAdornment:<InputAdornment position="end"><LinkIcon/></InputAdornment>
-                        }}
-                        required
-                        
-                        defaultValue={selectedArticleToRead?.imgUrl} 
+                        control={control}
+                        render={({ field }) => <TextField 
+                            {...field} 
+                            type='text' 
+                            placeholder='Agrega el link de la imagen'
+                            label='Agrega el link de la imagen'
+                            fullWidth
+                            InputProps={{
+                                endAdornment:<InputAdornment position="end"><LinkIcon/></InputAdornment>
+                            }}
+                            required
+                            defaultValue={selectedArticleToRead?.imgUrl} 
                         />
+                    }
+                    />
                 </Grid>
                 <Grid item container lg direction='column' >  
-                    <div  style={{
+                    <Box  style={{
                         width:'auto', 
                         display: 'flex', 
                         alignContent: 'space-between', 
@@ -246,11 +253,12 @@ export const AddArticleModal = ({
                             <Button type='submit'                        
                                 variant="contained" 
                                 color="primary"
+                                disabled={!isValid}
                             >
                                 Editar
                             </Button>
                         }
-                    </div> 
+                    </Box> 
                     {
                         isValid ?
                         '' :

@@ -175,7 +175,6 @@ export const Articles = ({
     const match = search.match(/selection=(.*)/);
     const type = match?.[1];
     console.log(selectedCategory)
-    //const actions: string[] = ['read', 'edit']
 
     useEffect(() => {
         
