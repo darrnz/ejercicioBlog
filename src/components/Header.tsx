@@ -1,21 +1,8 @@
-import React, { Dispatch } from 'react'
-import { Link, useLocation } from 'react-router-dom';
+import React from 'react'
+import { Link  as RouterLink, useLocation} from 'react-router-dom';
 import { useMediaQuery, Box, Container, Typography, AppBar, Tabs, Tab } from '@material-ui/core'
 import { makeStyles, Theme, createMuiTheme, ThemeProvider, responsiveFontSizes } from '@material-ui/core/styles';
 import { categories } from '../interfaces/interfaces'
-
-interface TabPanelProps {
-    children?: React.ReactNode;
-    index: any;
-    value: any;
-    }
-
-interface StateProps {
-    headerTabValue: number,
-    setHeaderTabValue: Dispatch<React.SetStateAction<number>>,
-    setSelectedCategory: Dispatch<React.SetStateAction<string>>
-    selectedCategory: string
-}
 
 function a11yProps(index: any) {
     return {
@@ -23,7 +10,7 @@ function a11yProps(index: any) {
     'aria-controls': `simple-tabpanel-${index}`,
     };
 }
-//backgroundColor: theme.palette.background.paper,
+
 const useStyles = makeStyles((theme: Theme) => ({
     root: {
         flexGrow: 1,
@@ -35,15 +22,22 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 
     tab: {
-        //backgroundColor: '#dbdada',
         fontSize: 20,
         textDecoration:'none',
         textAlign: 'center',
         
         [theme.breakpoints.down('sm')]: {
             textAlign: 'center',
-            fontSize: 10,
+            fontSize: 15,
         },
+        '&:hover': {
+            borderBottom: 'solid #888787'
+        },
+    },
+
+    activeTab: {
+
+            borderBottom: 'solid'
     },
 
     tabList: {
@@ -64,21 +58,19 @@ const useStyles = makeStyles((theme: Theme) => ({
 let theme = createMuiTheme();
 theme = responsiveFontSizes(theme); 
 
-export const Header = ({headerTabValue, setHeaderTabValue,setSelectedCategory, selectedCategory}: StateProps) => {
+export const Header = () => {
 
     const classes = useStyles();
     const { search } = useLocation();
     const match = search.match(/selection=(.*)/);
     const type = match?.[1];
-    console.log(selectedCategory)
-    console.log(type)
-        
-    const handleChange = (event: React.ChangeEvent<{}>, type: string) => {
-            console.log(event)
-            //setHeaderTabValue(newValue);
-            setSelectedCategory(type!!)
+
+    const [value, setValue] = React.useState(0)
+console.log(value)
+    const handleChangeTab = (event: React.ChangeEvent<{}>, newValue: number) => {
+        console.log(newValue)
+        setValue(newValue);
     };
-    
 
     return (
         <ThemeProvider theme={theme}>
@@ -98,9 +90,9 @@ export const Header = ({headerTabValue, setHeaderTabValue,setSelectedCategory, s
             <Box className={classes.root}>
                 <AppBar position="static" color='transparent'>
                     <Tabs 
+                        value={value}
                         className={classes.tabList}
-                        value={headerTabValue} 
-                        onChange={(event)=>handleChange(event, type!!)} 
+                        onChange={handleChangeTab} 
                         aria-label="simple tabs example"
                         variant="scrollable"
                         scrollButtons="off"
@@ -108,17 +100,14 @@ export const Header = ({headerTabValue, setHeaderTabValue,setSelectedCategory, s
                     {
                         categories.map((category, index) => {
                             return(
-                                
-                                <Link 
-                                    key={index} 
-                                    to={`/articles?selection=${category}`}  
-                                    className={classes.link}
-                                    >
-                                    <Tab 
-                                        label={category} 
-                                        className={classes.tab} 
-                                        {...a11yProps(index)}></Tab>
-                                </Link>  
+                                <Tab 
+                                    key={category}
+                                    label={category} 
+                                    className={classes.tab} 
+                                    {...a11yProps(index)}
+                                    component={RouterLink} 
+                                    to={`/articles?selection=${category}`}>
+                                </Tab>
                             )
                         })
                     }

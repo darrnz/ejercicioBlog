@@ -46,7 +46,7 @@
     },
     {
       "title": "Felis donec et odio.Felis donec et odio ",
-      "category": "Travel",
+      "category": "Lifestyle",
       "content": "Vel quam elementum pulvinar etiam non. Consectetur adipiscing elit pellentesque habitant morbi. Dignissim diam quis enim lobortis. Morbi tincidunt augue interdum velit euismod in. Auctor urna nunc id cursus metus aliquam eleifend. Sagittis aliquam malesuada bibendum arcu vitae elementum curabitur vitae nunc. Volutpat ac tincidunt vitae semper quis lectus nulla at. Amet venenatis urna cursus eget nunc. Faucibus et molestie ac feugiat sed lectus. Enim praesent elementum facilisis leo vel fringilla est ullamcorper eget. Lacus viverra vitae congue eu consequat. Ac tortor vitae purus faucibus ornare suspendisse sed nisi lacus. Pellentesque habitant morbi tristique senectus et netus et malesuada. Dolor sit amet consectetur adipiscing elit duis tristique.",
       "imgUrl": "https://image.shutterstock.com/image-photo/overhead-view-travelers-accessories-essential-600w-1009878310.jpg",
       "id": "12131",
@@ -183,6 +183,10 @@
         {
           "comment": "Hola",
           "author": "User18616"
+        },
+        {
+          "comment": "Hola",
+          "author": "User81628"
         }
       ]
     },

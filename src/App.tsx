@@ -12,7 +12,6 @@ import { ReadArticle } from './components/ReadArticle'
 
 function App() {
 
-    const [headerTabValue, setHeaderTabValue] = useState(0)
     const [selectedCategory, setSelectedCategory] = useState<string>('All')
     const [showAddArticle, setShowAddArticle] = useState(false)
     const [selectedArticleToRead, setSelectedArticleToRead] = useState<ArticleStruct>(null!)
@@ -56,12 +55,7 @@ function App() {
             
             {
                 selectedArticleToRead == null ? 
-                    <Header 
-                        headerTabValue={headerTabValue}
-                        setHeaderTabValue={setHeaderTabValue}
-                        setSelectedCategory={setSelectedCategory}
-                        selectedCategory={selectedCategory}
-                    /> : ''
+                    <Header/> : ''
             }
 
             <Switch>
