@@ -12,14 +12,11 @@ import { ReadArticle } from './components/ReadArticle'
 
 function App() {
 
-    const [selectedCategory, setSelectedCategory] = useState<string>('All')
     const [showAddArticle, setShowAddArticle] = useState(false)
     const [selectedArticleToRead, setSelectedArticleToRead] = useState<ArticleStruct>(null!)
     const [articlesResponse, setArticlesResponse] = useState<ArticlesList['posts']>([])
     const [switchAdd, setSwitch] = useState(false)
     const [editArticleActive, setEditArticleActive] = useState<boolean>(false)
-    console.log(selectedCategory)
-    console.log(editArticleActive)
 
     const getArticles = async() => {
         let responseSer = await fetch('http://localhost:3004/posts')
@@ -53,17 +50,12 @@ function App() {
 
             {showModalForm()}
             
-            {
-                selectedArticleToRead == null ? 
-                    <Header/> : ''
-            }
+            {selectedArticleToRead == null ? <Header/> : ''}
 
             <Switch>
                 <Route exact path={`/`} render={() => <Redirect to='/articles?selection=All'/>}/>
                 <Route exact path={`/articles`} render={
                     () => <Articles 
-                        selectedCategory={selectedCategory}
-                        setSelectedCategory={setSelectedCategory}
                         articlesResponse={articlesResponse}
                         setArticlesResponse={setArticlesResponse}
                         setSelectedArticleToRead={setSelectedArticleToRead} 
@@ -72,13 +64,11 @@ function App() {
                         />}
                 />
                     
-                <Route exact path={`/articles/:idArticle`} component={
-                    (props: string) => 
-                        <ReadArticle
-                                selectedArticleToRead={selectedArticleToRead}
-                                setSelectedArticleToRead={setSelectedArticleToRead} 
-                                selectedCategory={selectedCategory}
-                                setSwitch={setSwitch}
+                <Route exact path={`/articles/:idArticle`} render={
+                    () => <ReadArticle
+                            selectedArticleToRead={selectedArticleToRead}
+                            setSelectedArticleToRead={setSelectedArticleToRead} 
+                            setSwitch={setSwitch}
                     />}
                 />
             </Switch>

@@ -7,7 +7,6 @@ import { ArticleStruct } from '../interfaces/interfaces'
 import { Comments } from './Comments'
 
 export interface Props {
-    selectedCategory : string | undefined
     selectedArticleToRead: ArticleStruct
     setSelectedArticleToRead: Dispatch<React.SetStateAction<ArticleStruct>> 
     setSwitch: Dispatch<React.SetStateAction<boolean>>
@@ -99,7 +98,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-export const ReadArticle = ({ selectedArticleToRead, setSwitch, setSelectedArticleToRead, selectedCategory }: Props) => {
+export const ReadArticle = ({ selectedArticleToRead, setSwitch, setSelectedArticleToRead }: Props) => {
 
     const classes = useStyles()
     const history = useHistory()
@@ -138,7 +137,6 @@ export const ReadArticle = ({ selectedArticleToRead, setSwitch, setSelectedArtic
                     selectedArticleToRead={selectedArticleToRead} 
                     setSwitch={setSwitch}
                     setSelectedArticleToRead={setSelectedArticleToRead} 
-                    selectedCategory={selectedCategory}
                 />
             </Container>
         </Container>

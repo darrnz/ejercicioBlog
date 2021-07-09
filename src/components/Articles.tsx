@@ -8,10 +8,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 interface StateProps {
-    selectedCategory: string
     articlesResponse: ArticlesList['posts']
     setArticlesResponse:Dispatch<React.SetStateAction<ArticleStruct[]>>
-    setSelectedCategory: Dispatch<React.SetStateAction<string>>
     setSelectedArticleToRead: Dispatch<React.SetStateAction<ArticleStruct>> 
     setShowAddArticle: Dispatch<React.SetStateAction<boolean>>
     setEditArticleActive: Dispatch<React.SetStateAction<boolean>>
@@ -160,10 +158,9 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const Articles = ({ 
-    selectedCategory, 
-    setSelectedCategory,
     setSelectedArticleToRead,
-    articlesResponse, setArticlesResponse,
+    articlesResponse, 
+    setArticlesResponse,
     setShowAddArticle,
     setEditArticleActive 
 }: StateProps) => {
@@ -174,7 +171,6 @@ export const Articles = ({
    // let columns = width === 'xs' || width === 'sm'  ? 1 : 2;
     const match = search.match(/selection=(.*)/);
     const type = match?.[1];
-    console.log(selectedCategory)
 
     useEffect(() => {
         

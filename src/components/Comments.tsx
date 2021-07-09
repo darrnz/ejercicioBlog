@@ -6,7 +6,6 @@ import { useForm} from "react-hook-form";
 import { ArticleStruct } from '../interfaces/interfaces'
 
 export interface Props {
-    selectedCategory : string | undefined
     selectedArticleToRead: ArticleStruct
     setSelectedArticleToRead: Dispatch<React.SetStateAction<ArticleStruct>> 
     setSwitch: Dispatch<React.SetStateAction<boolean>>
@@ -35,15 +34,16 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-export const Comments = ({ selectedArticleToRead, setSwitch, setSelectedArticleToRead, selectedCategory }: Props) => {
+export const Comments = ({ selectedArticleToRead, setSwitch, setSelectedArticleToRead }: Props) => {
 
     const { idArticle } = useParams<{ idArticle: string }>()
     const classes = useStyles()
-    const { register, handleSubmit, watch, setValue, formState: { isDirty }, getValues } = useForm();
+    const { register, handleSubmit, reset, watch, setValue, formState: { isDirty }, getValues } = useForm();
+    const randomNum = String(Math.floor(Math.random() * 90000) + 10000)
 
     const addNewComment = async() => {
         setSwitch(true)
-        setValue('author', `User${String(Math.floor(Math.random() * 90000) + 10000)}`)
+        setValue('author', `User${randomNum}`)
         fetchComment()
         setSwitch(false)
     }
@@ -74,6 +74,7 @@ export const Comments = ({ selectedArticleToRead, setSwitch, setSelectedArticleT
                 author: author
             }]
         })
+        reset()
         
     }
     useEffect(() => {
@@ -90,7 +91,7 @@ export const Comments = ({ selectedArticleToRead, setSwitch, setSelectedArticleT
                             selectedArticleToRead.comments.map((comment:any, index:any) => {
                                 return(
                                     <>
-                                    <Grid  key={ index } item xs={12} className={classes.userCommentContainer}>
+                                    <Grid  key={randomNum} item xs={12} className={classes.userCommentContainer}>
                                         <Typography variant={'body2'}  className=''> <i>{comment.author}</i></Typography>
                                         <Typography variant={'body2'}  className=''>{comment.comment}</Typography>
                                     </Grid>
@@ -107,6 +108,7 @@ export const Comments = ({ selectedArticleToRead, setSwitch, setSelectedArticleT
                                 placeholder='Comparte tu opinión'
                                 fullWidth
                                 {...register('comment')}
+                                defaultValue=''
                             />
                             <Button 
                                 style={{marginTop:'15px'}}
