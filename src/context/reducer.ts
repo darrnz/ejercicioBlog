@@ -15,20 +15,18 @@ import {
 
 //buscar type
 export const blogReducer: Reducer<ArticlesContextStruct,BlogActions> = (
-    state: ArticlesContextStruct, 
-    action: BlogActions
+    state, 
+    action
 ) => {
-
     switch (action.type) {
         case ActionType.ArticleList:
             return {
                 ...state,
                 posts: [...action.payload]
             }
-            
     
         default:
-            state;
+            return state;
     }
 }
 

@@ -1,4 +1,4 @@
-import React, { useEffect, Dispatch } from 'react'
+import React, { useEffect, Dispatch, useContext } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
 import { ArticleStruct, ArticlesList } from '../interfaces/interfaces'
 import { isWidthDown , CircularProgress, Grid, Typography, IconButton, Box, Button } from '@material-ui/core'
@@ -6,6 +6,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import ChatIcon from '@material-ui/icons/Chat';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import {BlogContext}  from '../context/context'
 
 interface StateProps {
     articlesResponse: ArticlesList['posts']
@@ -171,13 +172,14 @@ export const Articles = ({
    // let columns = width === 'xs' || width === 'sm'  ? 1 : 2;
     const match = search.match(/selection=(.*)/);
     const type = match?.[1];
-
+    const { posts, addPost } = useContext(BlogContext)
+    console.log(posts)
     useEffect(() => {
-        
-    }, [articlesResponse])
+        addPost()
+    }, [/* articlesResponse */])
 
     const handleSelectedArticleClick = (id:string, event: React.MouseEvent<HTMLButtonElement, MouseEvent>, actions: string) => {
-        console.log(actions)
+/*      console.log(actions)
         event.preventDefault()
         const readArticle = articlesResponse?.filter((article) => article.id === id)
         console.log(readArticle)
@@ -187,30 +189,30 @@ export const Articles = ({
         } else {
             setEditArticleActive(true)
             setShowAddArticle(true)
-        }
+        } */
     }
 
     const handleDeleteArticle = async(id:string, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        event.preventDefault()
+/*         event.preventDefault()
         const updatedList = articlesResponse.filter((article) => article.id !== id)
         await fetch(`http://localhost:3004/posts/${id}`, {
             method:'DELETE',
             headers: { 'Content-Type': 'application/json'},
         }).then(res => res.json())
         setArticlesResponse([...updatedList])
-        
+         */
     }
 
     
     return (
         <Grid className={classes.rootGrid}>
             {
-                articlesResponse == null ?  
+                posts == null ?  
                     <div className={classes.root}>
                         <CircularProgress color="primary"/>
                     </div> 
                 :
-                    articlesResponse?.filter((article) => {
+                posts?.filter((article) => {
                         return type === 'All' ? article : article.category === type
                     }).map((article, index) => {
                         return(

@@ -7,7 +7,7 @@ import { Articles } from './components/Articles'
 import { AddArticleBtn } from './components/AddArticleBtn'
 import { ArticleStruct, ArticlesList } from './context/state'
 import { ReadArticle } from './components/ReadArticle'
-import BlogContextProvider, {BlogContext}  from './context/context'
+import {BlogContextProvider} from './context/provider'
 //npx json-server --watch db.json --port 3004
 
 
@@ -19,7 +19,7 @@ function App() {
     const [switchAdd, setSwitch] = useState(false)
     const [editArticleActive, setEditArticleActive] = useState<boolean>(false)
 
-    //const { listArticles } = useContext(BlogContext)
+    //const { posts } = useContext(BlogContext)
 
     const getArticles = async() => {
         let responseSer = await fetch('http://localhost:3004/posts')
@@ -28,8 +28,8 @@ function App() {
     }
 
     useEffect(() => {
-        getArticles()
-    }, [switchAdd])
+        
+    }, [])
 
     const showModalForm = () => {
         if(showAddArticle) {

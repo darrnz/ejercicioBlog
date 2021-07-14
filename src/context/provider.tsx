@@ -13,16 +13,11 @@ import {
     BlogActions 
 } from './actions'
 import { categories } from '../interfaces/interfaces' 
+import { BlogContext } from './context'
 
-export const BlogContext = createContext<{
-    state: ArticlesContextStruct,
-    dispatch: Dispatch<ArticlesContextStruct>
-}>({
-    state: initialState,
-    dispatch: () => undefined
-})
 
-const BlogContextProvider: React.FC = ({children}) => {
+
+export const BlogContextProvider: React.FC = ({children}) => {
 
     const [state, dispatch] = useReducer(blogReducer, initialState)
 
@@ -43,6 +38,7 @@ const BlogContextProvider: React.FC = ({children}) => {
 
         <BlogContext.Provider 
             value={{
+                posts: state.posts,
                 addPost: listArticles
             }}>
             {children}
@@ -52,4 +48,3 @@ const BlogContextProvider: React.FC = ({children}) => {
 
 }
 
-export default BlogContextProvider
