@@ -1,12 +1,13 @@
 import './App.css';
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { BrowserRouter as Router,Route, Switch, Redirect } from 'react-router-dom'
 import { Header }  from './components/Header'
 import { AddArticleModal } from './components/AddArticleModal'
 import { Articles } from './components/Articles'
 import { AddArticleBtn } from './components/AddArticleBtn'
-import { ArticleStruct, ArticlesList } from './interfaces/interfaces'
+import { ArticleStruct, ArticlesList } from './context/state'
 import { ReadArticle } from './components/ReadArticle'
+import BlogContextProvider, {BlogContext}  from './context/context'
 //npx json-server --watch db.json --port 3004
 
 
@@ -17,6 +18,8 @@ function App() {
     const [articlesResponse, setArticlesResponse] = useState<ArticlesList['posts']>([])
     const [switchAdd, setSwitch] = useState(false)
     const [editArticleActive, setEditArticleActive] = useState<boolean>(false)
+
+    //const { listArticles } = useContext(BlogContext)
 
     const getArticles = async() => {
         let responseSer = await fetch('http://localhost:3004/posts')
@@ -44,6 +47,7 @@ function App() {
     }
 
   return (
+      <BlogContextProvider>
         <Router>
         
             <AddArticleBtn setShowAddArticle={setShowAddArticle} />
@@ -75,6 +79,7 @@ function App() {
             
     
         </Router>
+    </BlogContextProvider>
   );
 }
 

@@ -66,14 +66,11 @@ export const AddArticleModal = ({
     setEditArticleActive, editArticleActive,
     setSelectedArticleToRead, selectedArticleToRead 
 } : Props) => {
-
-    console.log(selectedArticleToRead)
+    
     const classes = useStyles();
     const [modalStyle] = useState(getModalStyle);
-    //const [category, setCategory] = useState('')
 
-    const { handleSubmit, control, watch, setValue, formState: { isValid }, getValues } = useForm({mode: "onChange"});
-    console.log(watch())
+    const { handleSubmit, control, setValue, formState: { isValid }, getValues } = useForm({mode: "onChange"});
 
     const handleOnClick = async() => {
         setValue('id', String(Math.floor(Math.random() * 90000) + 10000))
@@ -108,11 +105,8 @@ export const AddArticleModal = ({
                 ...selectedArticleToRead, title, content, imgUrl, category
             })
         }).then(res => res.json())
-        console.log(responseUpdate)
         const updatedArticle = articlesResponse.findIndex(article => article.id === responseUpdate.id)
-        console.log(updatedArticle)
         articlesResponse[updatedArticle] = responseUpdate
-        //console.log(updatedList)
         setArticlesResponse([...articlesResponse])
         hadleModalClose()
     }
