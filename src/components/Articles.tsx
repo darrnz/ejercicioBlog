@@ -172,24 +172,23 @@ export const Articles = ({
    // let columns = width === 'xs' || width === 'sm'  ? 1 : 2;
     const match = search.match(/selection=(.*)/);
     const type = match?.[1];
-    const { posts, addPost } = useContext(BlogContext)
+    const { posts, addPost, readArticle } = useContext(BlogContext)
     console.log(posts)
     useEffect(() => {
         addPost()
     }, [/* articlesResponse */])
 
     const handleSelectedArticleClick = (id:string, event: React.MouseEvent<HTMLButtonElement, MouseEvent>, actions: string) => {
-/*      console.log(actions)
+        console.log(actions)
         event.preventDefault()
-        const readArticle = articlesResponse?.filter((article) => article.id === id)
-        console.log(readArticle)
-        setSelectedArticleToRead(readArticle[0])
+        readArticle(id)
+        //setSelectedArticleToRead(readArticle[0])
         if(actions === 'read') {
             history.push(`/articles/${id}`)
         } else {
             setEditArticleActive(true)
             setShowAddArticle(true)
-        } */
+        }
     }
 
     const handleDeleteArticle = async(id:string, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {

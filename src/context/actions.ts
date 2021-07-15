@@ -33,7 +33,7 @@ export interface ShowAddArticle {
 
 export interface ReadArticle {
     type: ActionType.ReadArticle
-    payload: ArticleStruct
+    payload: ArticleStruct['id']
 }
 
 export interface ArticleList {

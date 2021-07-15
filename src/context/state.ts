@@ -18,20 +18,22 @@ export interface ArticlesList {
 }
 
 export interface ArticlesContextStruct {
-    //categories: string[],
-    posts: ArticleStruct[],
-    //article: ArticleStruct,
-    //showAddArticle: boolean,
+    //categories: string[]
+    posts: ArticleStruct[]
+    article: ArticleStruct
+    //showAddArticle: boolean
     //editArticleActive: boolean,
     addPost: () => Promise<void>
+    readArticle: (idArticle: string) => void
 }
 
 export const initialState: ArticlesContextStruct = {
     //categories: categories,
     posts: [],
-    //article: null!,
+    article: null!,
     //showAddArticle: false,
     //editArticleActive: false,
-    addPost: async() => {}
+    addPost: async() => {},
+    readArticle: (id) => ''
 }
 

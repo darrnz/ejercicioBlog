@@ -5,8 +5,9 @@ import  { ArticlesContextStruct, ArticleStruct, ArticlesList, initialState  } fr
 export const BlogContext = createContext<ArticlesContextStruct>({
     //categories: categories,
     posts: [],
-    //article: null!,
+    article: null!,
     //showAddArticle: false,
     //editArticleActive: false,
-    addPost: async() => {}
+    addPost: async() => {},
+    readArticle: (id) => ''
 })

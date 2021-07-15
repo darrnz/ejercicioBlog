@@ -34,12 +34,21 @@ export const BlogContextProvider: React.FC = ({children}) => {
         }
     }
 
+    const readArticle = (idArticle: string) => {
+        dispatch({
+            type: ActionType.ReadArticle,
+            payload: idArticle
+        })
+    }
+
     return(
 
         <BlogContext.Provider 
             value={{
                 posts: state.posts,
-                addPost: listArticles
+                article: state.article,
+                addPost: listArticles,
+                readArticle: readArticle
             }}>
             {children}
         </BlogContext.Provider>

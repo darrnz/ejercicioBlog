@@ -1,10 +1,12 @@
-import React, { Dispatch, useEffect } from 'react'
+import React, { Dispatch, useEffect, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import { Grid, Container, Typography, Button } from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { ArticleStruct } from '../interfaces/interfaces'
 import { Comments } from './Comments'
+import {BlogContext}  from '../context/context'
+
 
 export interface Props {
     selectedArticleToRead: ArticleStruct
@@ -102,26 +104,27 @@ export const ReadArticle = ({ selectedArticleToRead, setSwitch, setSelectedArtic
 
     const classes = useStyles()
     const history = useHistory()
+    const { article } = useContext(BlogContext)
 
     const handleClickReturn = () => {
-        history.push(`/articles?selection=${selectedArticleToRead?.category}`)
+        history.push(`/articles?selection=${article?.category}`)
         setSelectedArticleToRead(null!)
     }
-    console.log(selectedArticleToRead)
+    console.log(article)
 
     useEffect(() => {
     }, [])
 
     return (
         <Container className={classes.root}>
-            <Container className={classes.headContainer} style={{backgroundImage: `url(${selectedArticleToRead && selectedArticleToRead.imgUrl})`}}>
+            <Container className={classes.headContainer} style={{backgroundImage: `url(${article && article.imgUrl})`}}>
                 <Grid container   direction="column" justify="space-evenly" alignItems="stretch">
                     <Grid item xs={12}>
-                        <Button className={classes.backBtn} onClick={handleClickReturn}><ArrowBackIcon/><strong>Back to {selectedArticleToRead.category} posts </strong></Button>
+                        <Button className={classes.backBtn} onClick={handleClickReturn}><ArrowBackIcon/><strong>Back to {article.category} posts </strong></Button>
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography variant={'h2'}  className={classes.artTitle}>{selectedArticleToRead.title}</Typography>
-                        <Typography variant={'h5'}  className={classes.artAuthor}>By: <i>{selectedArticleToRead.author}</i></Typography>
+                        <Typography variant={'h2'}  className={classes.artTitle}>{article.title}</Typography>
+                        <Typography variant={'h5'}  className={classes.artAuthor}>By: <i>{article.author}</i></Typography>
                     </Grid>
                 </Grid>
             </Container>
@@ -129,12 +132,12 @@ export const ReadArticle = ({ selectedArticleToRead, setSwitch, setSelectedArtic
             <Container style={{backgroundColor: '#d1d1d1'}}>
 
                 <Container className={classes.contentContainer}>
-                    <Typography variant='h4'>{selectedArticleToRead.title}</Typography>
-                    <Typography variant='body1'>{selectedArticleToRead.content}</Typography>
+                    <Typography variant='h4'>{article.title}</Typography>
+                    <Typography variant='body1'>{article.content}</Typography>
                 </Container>
 
                 <Comments 
-                    selectedArticleToRead={selectedArticleToRead} 
+                    selectedArticleToRead={article} 
                     setSwitch={setSwitch}
                     setSelectedArticleToRead={setSelectedArticleToRead} 
                 />

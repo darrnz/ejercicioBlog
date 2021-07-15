@@ -24,6 +24,12 @@ export const blogReducer: Reducer<ArticlesContextStruct,BlogActions> = (
                 ...state,
                 posts: [...action.payload]
             }
+        
+        case ActionType.ReadArticle:
+            return {
+                ...state,
+                article: state.posts.filter(post => post.id === action.payload)[0]
+            }
     
         default:
             return state;

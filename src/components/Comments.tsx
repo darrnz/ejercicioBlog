@@ -1,9 +1,10 @@
-import React, { Dispatch, useEffect } from 'react'
+import React, { Dispatch, useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import { Box, Grid, Container, Typography, Button, TextField } from '@material-ui/core'
 import { useForm} from "react-hook-form";
 import { ArticleStruct } from '../interfaces/interfaces'
+import {BlogContext}  from '../context/context'
 
 export interface Props {
     selectedArticleToRead: ArticleStruct
@@ -36,6 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Comments = ({ selectedArticleToRead, setSwitch, setSelectedArticleToRead }: Props) => {
 
+    const { article } = useContext(BlogContext)
     const { idArticle } = useParams<{ idArticle: string }>()
     const classes = useStyles()
     const { register, handleSubmit, reset, watch, setValue, formState: { isDirty }, getValues } = useForm();
@@ -88,7 +90,7 @@ export const Comments = ({ selectedArticleToRead, setSwitch, setSelectedArticleT
                 <Box>
                     <Grid container  direction="column" justify="space-around" alignItems="stretch" >
                         {
-                            selectedArticleToRead.comments.map((comment:any, index:any) => {
+                            article.comments.map((comment:any, index:any) => {
                                 return(
                                     <>
                                     <Grid  key={randomNum} item xs={12} className={classes.userCommentContainer}>
