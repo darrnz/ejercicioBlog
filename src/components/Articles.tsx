@@ -6,13 +6,10 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import ChatIcon from '@material-ui/icons/Chat';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import {BlogContext}  from '../context/context'
+import BlogContext from '../context/articles/context' 
 
 interface StateProps {
-    articlesResponse: ArticlesList['posts']
-    setArticlesResponse:Dispatch<React.SetStateAction<ArticleStruct[]>>
-    setSelectedArticleToRead: Dispatch<React.SetStateAction<ArticleStruct>> 
-    setShowAddArticle: Dispatch<React.SetStateAction<boolean>>
+    //setAddEditBtnState: Dispatch<React.SetStateAction<boolean>>
     setEditArticleActive: Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -158,13 +155,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export const Articles = ({ 
-    setSelectedArticleToRead,
-    articlesResponse, 
-    setArticlesResponse,
-    setShowAddArticle,
-    setEditArticleActive 
-}: StateProps) => {
+export const Articles = ({ setEditArticleActive }: StateProps) => {
 
     const { search } = useLocation();
     const classes = useStyles();
@@ -172,8 +163,8 @@ export const Articles = ({
    // let columns = width === 'xs' || width === 'sm'  ? 1 : 2;
     const match = search.match(/selection=(.*)/);
     const type = match?.[1];
-    const { posts, addPost, readArticle } = useContext(BlogContext)
-    console.log(posts)
+    const { posts, addPost, readArticle, article/* , showModal, AddEditBtnState */ } = useContext(BlogContext)
+    console.log(article)
     useEffect(() => {
         addPost()
     }, [/* articlesResponse */])
@@ -182,12 +173,11 @@ export const Articles = ({
         console.log(actions)
         event.preventDefault()
         readArticle(id)
-        //setSelectedArticleToRead(readArticle[0])
         if(actions === 'read') {
             history.push(`/articles/${id}`)
         } else {
             setEditArticleActive(true)
-            setShowAddArticle(true)
+            //showModal(!AddEditBtnState)
         }
     }
 

@@ -3,14 +3,11 @@ import { useHistory } from 'react-router-dom'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import { Grid, Container, Typography, Button } from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { ArticleStruct } from '../interfaces/interfaces'
 import { Comments } from './Comments'
-import {BlogContext}  from '../context/context'
+import BlogContext from '../context/articles/context'
 
 
 export interface Props {
-    selectedArticleToRead: ArticleStruct
-    setSelectedArticleToRead: Dispatch<React.SetStateAction<ArticleStruct>> 
     setSwitch: Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -100,18 +97,19 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-export const ReadArticle = ({ selectedArticleToRead, setSwitch, setSelectedArticleToRead }: Props) => {
+export const ReadArticle = ({ setSwitch }: Props) => {
 
     const classes = useStyles()
     const history = useHistory()
-    const { article } = useContext(BlogContext)
+    const { posts, article, readArticle } = useContext(BlogContext)
 
     const handleClickReturn = () => {
         history.push(`/articles?selection=${article?.category}`)
-        setSelectedArticleToRead(null!)
+        readArticle(null!)
     }
+   
+    console.log(posts)
     console.log(article)
-
     useEffect(() => {
     }, [])
 
@@ -137,9 +135,7 @@ export const ReadArticle = ({ selectedArticleToRead, setSwitch, setSelectedArtic
                 </Container>
 
                 <Comments 
-                    selectedArticleToRead={article} 
                     setSwitch={setSwitch}
-                    setSelectedArticleToRead={setSelectedArticleToRead} 
                 />
             </Container>
         </Container>

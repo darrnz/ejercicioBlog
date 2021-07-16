@@ -1,13 +1,14 @@
-import React, { Dispatch, useState, useEffect } from 'react'
+import React, { Dispatch, useState, useEffect, useContext } from 'react'
 import { Modal, FormControl, Select, MenuItem ,InputLabel, Typography, InputAdornment, TextField , Container, Button, Grid, Box } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { useForm, Controller } from "react-hook-form"
 import LinkIcon from '@material-ui/icons/Link';
 import { categories, ArticleStruct } from '../interfaces/interfaces'
+import BlogContext  from '../context/articles/context'
 
 interface Props {
-    setShowAddArticle: Dispatch<React.SetStateAction<boolean>>,
-    showAddArticle: boolean,
+    setAddEditBtnState: Dispatch<React.SetStateAction<boolean>>,
+    AddEditBtnState: boolean,
     articlesResponse: ArticleStruct[]
     setArticlesResponse: Dispatch<React.SetStateAction<ArticleStruct[]>>
     editArticleActive: boolean,
@@ -61,14 +62,15 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const AddArticleModal = ({ 
-    setShowAddArticle, showAddArticle, 
+    setAddEditBtnState, AddEditBtnState, 
     setArticlesResponse, articlesResponse, 
     setEditArticleActive, editArticleActive,
-    setSelectedArticleToRead, selectedArticleToRead 
+    selectedArticleToRead 
 } : Props) => {
     
     const classes = useStyles();
     const [modalStyle] = useState(getModalStyle);
+    const { addArticle, readArticle } = useContext(BlogContext)
 
     const { handleSubmit, control, setValue, formState: { isValid }, getValues } = useForm({mode: "onChange"});
 
@@ -76,28 +78,21 @@ export const AddArticleModal = ({
         setValue('id', String(Math.floor(Math.random() * 90000) + 10000))
         setValue('author', `User${String(Math.floor(Math.random() * 90000) + 10000)}`)
         setValue('comments', [])
-        const { title, author, id, content, comments, imgUrl, category } = getValues()
+        const newArticleData = getValues()
         hadleModalClose();
-        let newArticle = await fetch('http://localhost:3004/posts', {
-            method:'POST',
-            headers: { 'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                title, author, id, content, comments, imgUrl, category
-            })
-        }).then(res => res.json())
-
-        setArticlesResponse([...articlesResponse, newArticle])
+        addArticle(newArticleData)
     }
 
     const hadleModalClose = () => {
-        setShowAddArticle(false)
+        //showModal(!AddEditBtnState)
+        setAddEditBtnState(false)
         setEditArticleActive(false)
-        setSelectedArticleToRead(null!)
+        readArticle(null!)
     }
 
     const handleEditArticle = async() => {
         const { title, content, imgUrl, category } = getValues()
-        setShowAddArticle(false);
+        //showModal(!AddEditBtnState)
         const responseUpdate = await fetch(`http://localhost:3004/posts/${selectedArticleToRead.id}`, {
             method:'PUT',
             headers: { 'Content-Type': 'application/json'},
@@ -128,10 +123,10 @@ export const AddArticleModal = ({
             editArticle()
         }
     }, [])
-    
+    //
     return (
         <Modal
-            open={showAddArticle}
+            open={AddEditBtnState}
             onClose={hadleModalClose}
             aria-labelledby="simple-modal-title"
             aria-describedby="simple-modal-de|scription"

@@ -1,14 +1,11 @@
 import React, { Dispatch, useEffect, useContext } from 'react'
-import { useParams } from 'react-router-dom'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import { Box, Grid, Container, Typography, Button, TextField } from '@material-ui/core'
 import { useForm} from "react-hook-form";
 import { ArticleStruct } from '../interfaces/interfaces'
-import {BlogContext}  from '../context/context'
+import BlogContext  from '../context/articles/context'
 
 export interface Props {
-    selectedArticleToRead: ArticleStruct
-    setSelectedArticleToRead: Dispatch<React.SetStateAction<ArticleStruct>> 
     setSwitch: Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -35,10 +32,9 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-export const Comments = ({ selectedArticleToRead, setSwitch, setSelectedArticleToRead }: Props) => {
+export const Comments = ({ setSwitch }: Props) => {
 
-    const { article } = useContext(BlogContext)
-    const { idArticle } = useParams<{ idArticle: string }>()
+    const { article, addComment } = useContext(BlogContext)
     const classes = useStyles()
     const { register, handleSubmit, reset, watch, setValue, formState: { isDirty }, getValues } = useForm();
     const randomNum = String(Math.floor(Math.random() * 90000) + 10000)
@@ -46,42 +42,11 @@ export const Comments = ({ selectedArticleToRead, setSwitch, setSelectedArticleT
     const addNewComment = async() => {
         setSwitch(true)
         setValue('author', `User${randomNum}`)
-        fetchComment()
-        setSwitch(false)
-    }
-
-    const fetchComment = async() => {
         const { author, comment } = getValues()
-        await fetch(`http://localhost:3004/posts/${idArticle}`, {
-            method:'PUT',
-            headers: { 'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                title: selectedArticleToRead.title,
-                category: selectedArticleToRead.category,
-                content: selectedArticleToRead.content,
-                imgUrl: selectedArticleToRead.imgUrl,
-                id: selectedArticleToRead.id,
-                author: selectedArticleToRead.author,
-                comments: [...selectedArticleToRead.comments,{
-                    comment: comment,
-                    author: author
-                }]
-            })
-        }).then(res => res.json())
-
-        setSelectedArticleToRead({
-            ...selectedArticleToRead, 
-            comments: [...selectedArticleToRead.comments,{
-                comment: comment,
-                author: author
-            }]
-        })
+        addComment(article, comment, author)
+        setSwitch(false)
         reset()
-        
     }
-    useEffect(() => {
-        
-    }, [])
 
     return (
         <Container id='comments' className={classes.commentsContainer}>   
@@ -93,7 +58,7 @@ export const Comments = ({ selectedArticleToRead, setSwitch, setSelectedArticleT
                             article.comments.map((comment:any, index:any) => {
                                 return(
                                     <>
-                                    <Grid  key={randomNum} item xs={12} className={classes.userCommentContainer}>
+                                    <Grid  key={index} item xs={12} className={classes.userCommentContainer}>
                                         <Typography variant={'body2'}  className=''> <i>{comment.author}</i></Typography>
                                         <Typography variant={'body2'}  className=''>{comment.comment}</Typography>
                                     </Grid>
