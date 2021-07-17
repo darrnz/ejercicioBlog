@@ -1,16 +1,8 @@
-import React, { createContext, Dispatch, useReducer, Reducer } from 'react'
+import React, { useReducer } from 'react'
 import  { ArticlesContextStruct, initialState  } from './state'
 import {blogReducer} from './reducer'
-import { 
-    ActionType,
-    AddArticle,
-    EditArticle,
-    ArticleList,
-    DeleteArticle, 
-} from './actions'
+import { ActionType } from './actions'
 import BlogContext from './context'
-
-
 
 export const BlogContextProvider: React.FC = ({children}) => {
 
@@ -65,8 +57,6 @@ export const BlogContextProvider: React.FC = ({children}) => {
     }
 
     const addArticle = async(newArticleData: {[x: string]: any}) => {
-        console.log(newArticleData)
-        const {title, author, id, content, comments, imgUrl, category} = newArticleData
         const newArticle = await fetch('http://localhost:3004/posts', {
             method:'POST',
             headers: { 'Content-Type': 'application/json'},
@@ -79,6 +69,17 @@ export const BlogContextProvider: React.FC = ({children}) => {
             type: ActionType.AddArticle,
             payload: newArticle
         })
+    }
+
+    const editArticle = async(updateArticleData: {[x: string]: any}) => {
+        const { title, content, imgUrl, category } = updateArticleData
+        const responseUpdate = await fetch(`http://localhost:3004/posts/${state.article.id}`, {
+            method:'PUT',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                ...state.article, title, content, imgUrl, category
+            })
+        }).then(res => res.json())
     }
 
 /*     const showModal = (toggleAddEdit: boolean) => {
@@ -95,10 +96,11 @@ export const BlogContextProvider: React.FC = ({children}) => {
                 posts: state.posts,
                 article: state.article,
                 //AddEditBtnState: state.AddEditBtnState,
-                addPost: listArticles,
+                listArticles: listArticles,
                 readArticle: readArticle,
                 addComment: addComment,
-                addArticle: addArticle
+                addArticle: addArticle,
+                editArticle: editArticle
                 // showModal: showModal
             }}>
             {children}

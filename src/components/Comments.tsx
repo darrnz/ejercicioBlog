@@ -2,7 +2,6 @@ import React, { Dispatch, useEffect, useContext } from 'react'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import { Box, Grid, Container, Typography, Button, TextField } from '@material-ui/core'
 import { useForm} from "react-hook-form";
-import { ArticleStruct } from '../interfaces/interfaces'
 import BlogContext  from '../context/articles/context'
 
 export interface Props {

@@ -1,6 +1,5 @@
 import React, { useEffect, Dispatch, useContext } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
-import { ArticleStruct, ArticlesList } from '../interfaces/interfaces'
 import { isWidthDown , CircularProgress, Grid, Typography, IconButton, Box, Button } from '@material-ui/core'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import ChatIcon from '@material-ui/icons/Chat';
@@ -9,7 +8,7 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import BlogContext from '../context/articles/context' 
 
 interface StateProps {
-    //setAddEditBtnState: Dispatch<React.SetStateAction<boolean>>
+    setAddEditBtnState: Dispatch<React.SetStateAction<boolean>>
     setEditArticleActive: Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -155,7 +154,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export const Articles = ({ setEditArticleActive }: StateProps) => {
+export const Articles = ({ setEditArticleActive, setAddEditBtnState }: StateProps) => {
 
     const { search } = useLocation();
     const classes = useStyles();
@@ -163,11 +162,11 @@ export const Articles = ({ setEditArticleActive }: StateProps) => {
    // let columns = width === 'xs' || width === 'sm'  ? 1 : 2;
     const match = search.match(/selection=(.*)/);
     const type = match?.[1];
-    const { posts, addPost, readArticle, article/* , showModal, AddEditBtnState */ } = useContext(BlogContext)
+    const { posts, listArticles, readArticle, article, /* , showModal, AddEditBtnState */ } = useContext(BlogContext)
     console.log(article)
     useEffect(() => {
-        addPost()
-    }, [/* articlesResponse */])
+        listArticles()
+    }, [article])
 
     const handleSelectedArticleClick = (id:string, event: React.MouseEvent<HTMLButtonElement, MouseEvent>, actions: string) => {
         console.log(actions)
@@ -176,7 +175,9 @@ export const Articles = ({ setEditArticleActive }: StateProps) => {
         if(actions === 'read') {
             history.push(`/articles/${id}`)
         } else {
+            setAddEditBtnState(true)
             setEditArticleActive(true)
+            
             //showModal(!AddEditBtnState)
         }
     }

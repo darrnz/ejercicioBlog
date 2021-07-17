@@ -3,18 +3,14 @@ import { Modal, FormControl, Select, MenuItem ,InputLabel, Typography, InputAdor
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { useForm, Controller } from "react-hook-form"
 import LinkIcon from '@material-ui/icons/Link';
-import { categories, ArticleStruct } from '../interfaces/interfaces'
+import { categories } from '../interfaces/interfaces'
 import BlogContext  from '../context/articles/context'
 
 interface Props {
     setAddEditBtnState: Dispatch<React.SetStateAction<boolean>>,
     AddEditBtnState: boolean,
-    articlesResponse: ArticleStruct[]
-    setArticlesResponse: Dispatch<React.SetStateAction<ArticleStruct[]>>
     editArticleActive: boolean,
     setEditArticleActive: Dispatch<React.SetStateAction<boolean>>
-    selectedArticleToRead: ArticleStruct
-    setSelectedArticleToRead: Dispatch<React.SetStateAction<ArticleStruct>> 
 }
 
 function getModalStyle() {
@@ -63,14 +59,12 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const AddArticleModal = ({ 
     setAddEditBtnState, AddEditBtnState, 
-    setArticlesResponse, articlesResponse, 
     setEditArticleActive, editArticleActive,
-    selectedArticleToRead 
 } : Props) => {
     
     const classes = useStyles();
     const [modalStyle] = useState(getModalStyle);
-    const { addArticle, readArticle } = useContext(BlogContext)
+    const { addArticle, readArticle, editArticle, article } = useContext(BlogContext)
 
     const { handleSubmit, control, setValue, formState: { isValid }, getValues } = useForm({mode: "onChange"});
 
@@ -91,36 +85,27 @@ export const AddArticleModal = ({
     }
 
     const handleEditArticle = async() => {
-        const { title, content, imgUrl, category } = getValues()
-        //showModal(!AddEditBtnState)
-        const responseUpdate = await fetch(`http://localhost:3004/posts/${selectedArticleToRead.id}`, {
-            method:'PUT',
-            headers: { 'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                ...selectedArticleToRead, title, content, imgUrl, category
-            })
-        }).then(res => res.json())
-        const updatedArticle = articlesResponse.findIndex(article => article.id === responseUpdate.id)
-        articlesResponse[updatedArticle] = responseUpdate
-        setArticlesResponse([...articlesResponse])
+        const updateArticleData = getValues()
+        //showModal(!AddEditBtnState) 
+        editArticle(updateArticleData)
         hadleModalClose()
     }
 
-    const editArticle = () => {
-            const fields = Object.keys(selectedArticleToRead)
+    const setOriginalContent = () => {
+            const fields = Object.keys(article)
             console.log(fields)
             /* fields.forEach((field) => {
                 setValue(field, selectedArticleToRead[field])
             })  */
-            setValue('title', selectedArticleToRead.title)
-            setValue('content', selectedArticleToRead.content)
-            setValue('category', selectedArticleToRead.category)
-            setValue('imgUrl', selectedArticleToRead.imgUrl)
+            setValue('title', article.title)
+            setValue('content', article.content)
+            setValue('category', article.category)
+            setValue('imgUrl', article.imgUrl)
     }
 
     useEffect(() => {
         if(editArticleActive) {
-            editArticle()
+            setOriginalContent()
         }
     }, [])
     //
@@ -151,7 +136,7 @@ export const AddArticleModal = ({
                             fullWidth
                             required
                             label="Escribe el título"
-                            defaultValue={selectedArticleToRead?.title}
+                            defaultValue={article?.title}
                             />
                         }
                     />
@@ -169,7 +154,7 @@ export const AddArticleModal = ({
                             placeholder='Escribe el contenido'
                             fullWidth
                             required
-                            defaultValue={selectedArticleToRead?.content}
+                            defaultValue={article?.content}
                             />
                         }        
                     />
@@ -181,7 +166,7 @@ export const AddArticleModal = ({
                             name='category'
                             control={control}
                             render={({field}) => <Select
-                                defaultValue={selectedArticleToRead?.category} 
+                                defaultValue={article?.category} 
                                 {...field}
                                 required
                                 label='Selecciona la categoría'>
@@ -207,7 +192,7 @@ export const AddArticleModal = ({
                                 endAdornment:<InputAdornment position="end"><LinkIcon/></InputAdornment>
                             }}
                             required
-                            defaultValue={selectedArticleToRead?.imgUrl} 
+                            defaultValue={article?.imgUrl} 
                         />
                     }
                     />

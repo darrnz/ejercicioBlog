@@ -1,4 +1,4 @@
-import { categories, ArticleStruct, ArticlesList  } from '../../interfaces/interfaces' 
+import { ArticleStruct } from '../../interfaces/interfaces' 
 
 export interface ArticlesContextStruct {
     //categories: string[]
@@ -6,14 +6,16 @@ export interface ArticlesContextStruct {
     article: ArticleStruct
     //AddEditBtnState: boolean
     //editArticleActive: boolean,
-    addPost: () => Promise<void>
+    listArticles: () => Promise<void>
     readArticle:(idArticle: string) => void
     addComment: (
         article: ArticlesContextStruct['article'],
         newComment: string,
         author: string
     ) => Promise<void>
-    addArticle: (newArticleData: {[x: string]: any} ) => Promise<void>
+    addArticle: (newArticleData: {[x: string]: any} ) => Promise<void>,
+    editArticle: (updateArticleData: {[x: string]: any},
+    ) => Promise<void>
     //showModal: (toggleAddEdit: boolean) => void
 }
 
@@ -23,10 +25,11 @@ export const initialState: ArticlesContextStruct = {
     article: null!,
     //AddEditBtnState: false,
     //editArticleActive: false,
-    addPost: async() => {},
+    listArticles: async() => {},
     readArticle:(id) => {},
     addComment: async() => {},
     addArticle: async() => {},
+    editArticle:  async() => {}
     //showModal: (toggleAddEdit) => {}
 }
 
