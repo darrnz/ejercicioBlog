@@ -4,34 +4,31 @@ import { Box, Grid, Container, Typography, Button, TextField } from '@material-u
 import { useForm} from "react-hook-form";
 import BlogContext  from '../context/articles/context'
 
-export interface Props {
-    setSwitch: Dispatch<React.SetStateAction<boolean>>
-}
 
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    commentsContainer: {
-        paddingLeft: '25%',
-        paddingTop: 40,
-        paddingRight: '25%',
-        marginBottom: 50,
-    },
-    userCommentContainer: {
-        backgroundColor: '#ecebeb',
-        marginTop: 15,
-        padding: 15,
-        borderRadius: 4,
-        boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+    createStyles({
+        commentsContainer: {
+            paddingLeft: '25%',
+            paddingTop: 40,
+            paddingRight: '25%',
+            marginBottom: 50,
+        },
+        userCommentContainer: {
+            backgroundColor: '#ecebeb',
+            marginTop: 15,
+            padding: 15,
+            borderRadius: 4,
+            boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
 
-    },
-    addComment: {
-        width: 'auto',
-    }
-  }),
+        },
+        addComment: {
+            width: 'auto',
+        }
+    }),
 );
 
 
-export const Comments = ({ setSwitch }: Props) => {
+export const Comments = () => {
 
     const { article, addComment } = useContext(BlogContext)
     const classes = useStyles()
@@ -39,11 +36,9 @@ export const Comments = ({ setSwitch }: Props) => {
     const randomNum = String(Math.floor(Math.random() * 90000) + 10000)
 
     const addNewComment = async() => {
-        setSwitch(true)
         setValue('author', `User${randomNum}`)
         const { author, comment } = getValues()
         addComment(article, comment, author)
-        setSwitch(false)
         reset()
     }
 

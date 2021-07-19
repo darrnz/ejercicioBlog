@@ -162,11 +162,11 @@ export const Articles = ({ setEditArticleActive, setAddEditBtnState }: StateProp
    // let columns = width === 'xs' || width === 'sm'  ? 1 : 2;
     const match = search.match(/selection=(.*)/);
     const type = match?.[1];
-    const { posts, listArticles, readArticle, article, /* , showModal, AddEditBtnState */ } = useContext(BlogContext)
-    console.log(article)
+    const { posts, listArticles, readArticle, deleteArticle /* , showModal, AddEditBtnState */ } = useContext(BlogContext)
+    
     useEffect(() => {
         listArticles()
-    }, [article])
+    }, [])
 
     const handleSelectedArticleClick = (id:string, event: React.MouseEvent<HTMLButtonElement, MouseEvent>, actions: string) => {
         console.log(actions)
@@ -181,18 +181,6 @@ export const Articles = ({ setEditArticleActive, setAddEditBtnState }: StateProp
             //showModal(!AddEditBtnState)
         }
     }
-
-    const handleDeleteArticle = async(id:string, event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-/*         event.preventDefault()
-        const updatedList = articlesResponse.filter((article) => article.id !== id)
-        await fetch(`http://localhost:3004/posts/${id}`, {
-            method:'DELETE',
-            headers: { 'Content-Type': 'application/json'},
-        }).then(res => res.json())
-        setArticlesResponse([...updatedList])
-         */
-    }
-
     
     return (
         <Grid className={classes.rootGrid}>
@@ -259,7 +247,7 @@ export const Articles = ({ setEditArticleActive, setAddEditBtnState }: StateProp
                                                 <EditIcon style={{color: '#fff176'}} className={classes.infoCrud}/>
                                             </IconButton>
                                             <IconButton color="secondary"
-                                                onClick={(event) =>handleDeleteArticle(article.id, event)}
+                                                onClick={() => deleteArticle(article.id) }
                                                 className={classes.crudBtn}>
                                                 <DeleteOutlineIcon  className={classes.infoCrud}/>
                                             </IconButton>

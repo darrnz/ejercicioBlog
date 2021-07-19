@@ -80,6 +80,23 @@ export const BlogContextProvider: React.FC = ({children}) => {
                 ...state.article, title, content, imgUrl, category
             })
         }).then(res => res.json())
+
+        dispatch({
+            type: ActionType.EditArticle,
+            payload: responseUpdate
+        })
+    }
+
+    const deleteArticle = async(idArticle: string) => {
+        await fetch(`http://localhost:3004/posts/${idArticle}`, {
+            method:'DELETE',
+            headers: { 'Content-Type': 'application/json'},
+        }).then(res => res.json())
+        alert('Article deleted')
+        dispatch({
+            type: ActionType.DeleteArticle,
+            payload: idArticle
+        })
     }
 
 /*     const showModal = (toggleAddEdit: boolean) => {
@@ -100,7 +117,8 @@ export const BlogContextProvider: React.FC = ({children}) => {
                 readArticle: readArticle,
                 addComment: addComment,
                 addArticle: addArticle,
-                editArticle: editArticle
+                editArticle: editArticle, 
+                deleteArticle: deleteArticle,
                 // showModal: showModal
             }}>
             {children}

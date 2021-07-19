@@ -2,7 +2,7 @@
   "posts": [
     {
       "title": "Consectetur adipiscing ",
-      "category": "Business",
+      "category": "Travel",
       "content": "Convallis aenean et tortor at risus viverra adipiscing at in. Volutpat lacus laoreet non curabitur. Proin sed libero enim sed. Congue nisi vitae suscipit tellus mauris a diam maecenas sed. Montes nascetur ridiculus mus mauris vitae ultricies. At augue eget arcu dictum. Tristique sollicitudin nibh sit amet commodo. Sed egestas egestas fringilla phasellus faucibus scelerisque eleifend donec pretium. Condimentum mattis pellentesque id nibh tortor id aliquet. Dignissim suspendisse in est ante in nibh. Ac felis donec et odio pellentesque diam volutpat commodo. Lorem sed risus ultricies tristique nulla aliquet enim tortor at. Vitae tortor condimentum lacinia quis vel eros. Eget sit amet tellus cras adipiscing enim. Gravida cum sociis natoque penatibus et magnis dis parturient. Ac felis donec et odio pellentesque diam volutpat commodo. Eu volutpat odio facilisis mauris sit. In massa tempor nec feugiat nisl pretium fusce id velit. Tortor posuere ac ut consequat semper. Ac orci phasellus egestas tellus rutrum tellus pellentesque eu.",
       "imgUrl": "https://image.shutterstock.com/image-photo/overhead-view-travelers-accessories-essential-600w-425996818.jpg",
       "id": "91011",
@@ -93,11 +93,23 @@
         {
           "comment": "funciona",
           "author": "User50301"
+        },
+        {
+          "comment": "funciona?",
+          "author": "User41898"
+        },
+        {
+          "comment": "parece que si",
+          "author": "User30448"
+        },
+        {
+          "comment": "woof woof",
+          "author": "User99930"
         }
       ]
     },
     {
-      "title": "Felis donec et odio.Felis donec et odio ",
+      "title": "Felis donec et odio.",
       "category": "Lifestyle",
       "content": "Vel quam elementum pulvinar etiam non. Consectetur adipiscing elit pellentesque habitant morbi. Dignissim diam quis enim lobortis. Morbi tincidunt augue interdum velit euismod in. Auctor urna nunc id cursus metus aliquam eleifend. Sagittis aliquam malesuada bibendum arcu vitae elementum curabitur vitae nunc. Volutpat ac tincidunt vitae semper quis lectus nulla at. Amet venenatis urna cursus eget nunc. Faucibus et molestie ac feugiat sed lectus. Enim praesent elementum facilisis leo vel fringilla est ullamcorper eget. Lacus viverra vitae congue eu consequat. Ac tortor vitae purus faucibus ornare suspendisse sed nisi lacus. Pellentesque habitant morbi tristique senectus et netus et malesuada. Dolor sit amet consectetur adipiscing elit duis tristique.",
       "imgUrl": "https://image.shutterstock.com/image-photo/overhead-view-travelers-accessories-essential-600w-1009878310.jpg",
@@ -119,11 +131,19 @@
         {
           "comment": "sdf",
           "author": "User10268"
+        },
+        {
+          "comment": "gdfgdfgdfgdfg",
+          "author": "User41550"
+        },
+        {
+          "comment": "jsjsjsjsjsjs",
+          "author": "User56030"
         }
       ]
     },
     {
-      "title": "Vel quam elementum pulvinar etiam non",
+      "title": "Vel quam elementum ",
       "category": "Food",
       "content": "Vel quam elementum pulvinar etiam non. Consectetur adipiscing elit pellentesque habitant morbi. Dignissim diam quis enim lobortis. Morbi tincidunt augue interdum velit euismod in. Auctor urna nunc id cursus metus aliquam eleifend. Sagittis aliquam malesuada bibendum arcu vitae elementum curabitur vitae nunc. Volutpat ac tincidunt vitae semper quis lectus nulla at. Amet venenatis urna cursus eget nunc. Faucibus et molestie ac feugiat sed lectus. Enim praesent elementum facilisis leo vel fringilla est ullamcorper eget. Lacus viverra vitae congue eu consequat. Ac tortor vitae purus faucibus ornare suspendisse sed nisi lacus. Pellentesque habitant morbi tristique senectus et netus et malesuada. Dolor sit amet consectetur adipiscing elit duis tristique.",
       "imgUrl": "https://image.shutterstock.com/image-photo/various-spices-bowls-on-black-600w-1931420096.jpg",
@@ -390,44 +410,12 @@
       "category": "Travel"
     },
     {
-      "title": "sdfsdf fsdf",
-      "category": "Travel",
-      "content": "sdfsdf",
-      "imgUrl": "https://www.italymagazine.com/sites/default/files/feature-story/leader/bigstock-plane-travel-concept-hand-hol-250149976.jpg",
-      "id": "40087",
-      "author": "User11248",
-      "comments": [
-        {
-          "comment": "Hola",
-          "author": "User43334"
-        }
-      ]
-    },
-    {
       "title": "Vel quam ",
       "author": "User92490",
       "id": "98153",
       "content": "fdsfsdfasdqwerwefdsfwwefr2321423423423rewfdwfsdfsdf",
       "comments": [],
       "imgUrl": "https://th.bing.com/th/id/Rb5a325d64dc2c1ca82e83fb13dc02ed4?rik=tkD5heUCjUhqyw&pid=ImgRaw",
-      "category": "Work"
-    },
-    {
-      "title": "sdfsdf",
-      "author": "User81245",
-      "id": "64462",
-      "content": "Holaholadfsfsdf",
-      "comments": [],
-      "imgUrl": "https://www.italymagazine.com/sites/default/files/feature-story/leader/bigstock-plane-travel-concept-hand-hol-250149976.jpg",
-      "category": "Lifestyle"
-    },
-    {
-      "title": "Vel quam ",
-      "author": "User86753",
-      "id": "90548",
-      "content": "sdfsdf",
-      "comments": [],
-      "imgUrl": "https://www.italymagazine.com/sites/default/files/feature-story/leader/bigstock-plane-travel-concept-hand-hol-250149976.jpg",
       "category": "Work"
     },
     {

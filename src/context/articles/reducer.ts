@@ -35,12 +35,19 @@ export const blogReducer: Reducer<ArticlesContextStruct,BlogActions> = (
                 posts: [...state.posts, action.payload]
             }
         
+        ////es neceario?
         case ActionType.EditArticle:
             const editedArticleIndex = state.posts.findIndex(article => article.id === action.payload.id)
             state.posts[editedArticleIndex] = action.payload
             return {
                 ...state,
                 posts: [...state.posts]
+            }
+        
+        case ActionType.DeleteArticle: 
+            return {
+                ...state,
+                posts: state.posts.filter((article) => article.id !== action.payload)
             }
 
 /*         case ActionType.AddEditBtnState:

@@ -133,10 +133,9 @@ export const ReadArticle = ({ setSwitch }: Props) => {
                     <Typography variant='h4'>{article.title}</Typography>
                     <Typography variant='body1'>{article.content}</Typography>
                 </Container>
-
-                <Comments 
-                    setSwitch={setSwitch}
-                />
+                
+                <Comments/>
+                
             </Container>
         </Container>
     )

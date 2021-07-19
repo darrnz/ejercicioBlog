@@ -13,7 +13,6 @@ import BlogContext  from './context/articles/context'
 function App() {
 
     const [AddEditBtnState, setAddEditBtnState] = useState(false)
-    const [switchAdd, setSwitch] = useState(false)
     const [editArticleActive, setEditArticleActive] = useState<boolean>(false)
 
     const { article } = useContext(BlogContext)
@@ -32,16 +31,15 @@ function App() {
     }
     console.log(article)
 
-  return (
-      
-          
+    return (
+        
+            
         <Router>
         
             <AddArticleBtn 
                 setAddEditBtnState={setAddEditBtnState}
                 AddEditBtnState={AddEditBtnState} />
-            {/*  */}
-            
+
             {showModalForm()}
             
             {!article ? <Header/> : ''}
@@ -56,11 +54,7 @@ function App() {
                         />}
                 />
                     
-                <Route exact path={`/articles/:idArticle`} render={
-                    () => <ReadArticle
-                            setSwitch={setSwitch}
-                    />}
-                />
+                <Route exact path={`/articles/:idArticle`} component={ReadArticle} />
             </Switch>
             
     
