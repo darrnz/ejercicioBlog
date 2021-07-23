@@ -2,11 +2,14 @@ import React, { Dispatch, useState, useContext } from 'react'
 import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core/styles'
 import { Fab, useMediaQuery } from '@material-ui/core'
 import  EditIcon from '@material-ui/icons/Edit'
+import useOpenModal from '../hooks/useOpenModal'
 import BlogContext from '../context/articles/context'
+import AddEditBtnContext from '../context/addEditBtn/context'
+import { AddArticleModal } from '../components/AddArticleModal'
 
 interface Props {
-    AddEditBtnState: boolean
-    setAddEditBtnState: Dispatch<React.SetStateAction<boolean>>
+    setAddEditBtnState: Dispatch<React.SetStateAction<boolean>>,
+    AddEditBtnState: boolean,
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -28,13 +31,12 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export const AddArticleBtn = ({AddEditBtnState, setAddEditBtnState}: Props) => {
+export const AddArticleBtn = () => {
 
     const classes = useStyles()
     const themes = useTheme()
     const [hovering, setHovering] = useState(false)
-    //const { showModal, AddEditBtnState } = useContext(BlogContext)
-    //console.log('button: ' + AddEditBtnState)
+    const [openModal, closeModal, modalStatus] = useOpenModal()
     const isSmallScreen = useMediaQuery(themes.breakpoints.down("sm"));
 /*     const buttonProps = {
         size: isSmallScreen ? "small" : "large"
@@ -44,45 +46,37 @@ export const AddArticleBtn = ({AddEditBtnState, setAddEditBtnState}: Props) => {
         setHovering(!hovering)
     }
 
-    const expandIcon = () => {
-        if(hovering === true) {
-
-        }
-    }
-
     const onClickHandle = (event: React.MouseEvent<SVGSVGElement, MouseEvent> | React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.preventDefault()
-        setAddEditBtnState(!AddEditBtnState)
+        openModal()
     }
+    
 
     return (
         <div className={classes.root}>
-
         {
             hovering? 
             <Fab 
                 /* {...buttonProps} */
-                onMouseEnter={handleHover} 
-                onMouseLeave={handleHover}
+                onMouseLeave={handleHover} 
                 variant="extended" 
                 color="secondary" 
                 aria-label="edit" 
-                onClick={(event)=>onClickHandle(event)} 
+                onClick={onClickHandle} 
                 className={classes.fab} >
                 Add Article
                 
-                <EditIcon style={{paddingLeft:'2px'}} onClick={(event)=>onClickHandle(event)} /> 
+                <EditIcon style={{paddingLeft:'2px'}} onClick={onClickHandle} /> 
             </Fab> 
         :
             <Fab 
             /* {...buttonProps} */
                 onMouseEnter={handleHover} 
-                onMouseLeave={handleHover}
                 color="secondary" 
                 aria-label="edit" 
-                onClick={(event)=>onClickHandle(event)} 
+                onClick={onClickHandle} 
                 className={classes.fab} >
-                <EditIcon style={{paddingLeft:'2px'}} onClick={(event)=>onClickHandle(event)} /> 
+                <EditIcon style={{paddingLeft:'2px'}} onClick={onClickHandle} /> 
             </Fab>
         }
         </div>

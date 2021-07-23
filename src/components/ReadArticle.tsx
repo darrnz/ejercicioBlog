@@ -1,15 +1,10 @@
-import React, { Dispatch, useEffect, useContext } from 'react'
+import { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import { Grid, Container, Typography, Button } from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { Comments } from './Comments'
 import BlogContext from '../context/articles/context'
-
-
-export interface Props {
-    setSwitch: Dispatch<React.SetStateAction<boolean>>
-}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -97,28 +92,28 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-export const ReadArticle = ({ setSwitch }: Props) => {
+export const ReadArticle = () => {
 
     const classes = useStyles()
     const history = useHistory()
-    const { posts, article, readArticle } = useContext(BlogContext)
+    const { article, readArticle } = useContext(BlogContext)
 
     const handleClickReturn = () => {
         history.push(`/articles?selection=${article?.category}`)
         readArticle(null!)
     }
    
-    console.log(posts)
-    console.log(article)
-    useEffect(() => {
-    }, [])
-
     return (
         <Container className={classes.root}>
             <Container className={classes.headContainer} style={{backgroundImage: `url(${article && article.imgUrl})`}}>
                 <Grid container   direction="column" justify="space-evenly" alignItems="stretch">
                     <Grid item xs={12}>
-                        <Button className={classes.backBtn} onClick={handleClickReturn}><ArrowBackIcon/><strong>Back to {article.category} posts </strong></Button>
+                        <Button 
+                            className={classes.backBtn} 
+                            onClick={handleClickReturn}>
+                            <ArrowBackIcon/>
+                            <strong>Back to {article.category} posts </strong>
+                        </Button>
                     </Grid>
                     <Grid item xs={12}>
                         <Typography variant={'h2'}  className={classes.artTitle}>{article.title}</Typography>

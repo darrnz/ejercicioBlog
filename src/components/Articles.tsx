@@ -1,14 +1,12 @@
 import React, { useEffect, Dispatch, useContext } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
-import { isWidthDown , CircularProgress, Grid, Typography, IconButton, Box, Button } from '@material-ui/core'
+import { CircularProgress, Grid, Typography, Box, Button } from '@material-ui/core'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import CrudBtn from './CrudBtn'
 import ChatIcon from '@material-ui/icons/Chat';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import BlogContext from '../context/articles/context' 
 
 interface StateProps {
-    setAddEditBtnState: Dispatch<React.SetStateAction<boolean>>
     setEditArticleActive: Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -24,41 +22,41 @@ const useStyles = makeStyles((theme: Theme) =>
 
         rootGrid: {
             display: 'flex',
-            height: 'auto',
             flexWrap: 'wrap',
-            justifyContent: 'space-around',
             overflow: 'hidden',
             backgroundColor: theme.palette.background.paper,
             marginTop: 30,
-
-        },
-        gridList: {
+            flexDirection: 'row',
             width: '100%',
-            padding: 10,
-            border: 'solid',
-            [theme.breakpoints.down('sm')]: {
-                flexDirection: 'row',
-                width: '100%',
-                flexWrap:'nowrap',
-                fontSize: 10,
-                alignContent: 'center',
-                alignItems: 'center', 
-                justifyContent: 'center'
-            },
-            
+
         },
         gridTile: {
             minWidth: '30%',
             height: 350,
-            //border: 'solid',
             flex: '1',
+            width: '90%',
             display: 'flex',
             overflow:'hidden',
             opacity: 0.8,
+            left:0,
+            right:0,
+            margin:'0 auto',
             [theme.breakpoints.down('sm')]: {
                 display: 'flex',
-                width: 100,
+                width: 'auto',
                 fontSize: 10,
+                minWidth: '80%',
+                height: 250,
+                '&:hover':{
+                    opacity: 'none',
+                    '& $imgBackground':{
+                        transform: 'none',
+                        transition: 'unset',
+                    },
+                    '& $crudBtn': {
+                        display: 'none'
+                    }
+                },
             },
             '&:hover':{
                 opacity: 1,
@@ -129,61 +127,39 @@ const useStyles = makeStyles((theme: Theme) =>
                 fontSize: 15,
             },
         },
-        crudBtn: {
-            //display: 'none',
-            
-            textShadow: '2px 2px #161515',
-            border: 'solid 1px',
-            borderRadius: '50%',
-            '&:hover': {
-                color: '#363535',
-            }
-        },
         categoryAndCrud: {
             width: '100%',
             display: 'flex', 
             justifyContent: 'space-between', 
             alignItems: 'center', 
         }, 
-        infoCrud: {
-            fontSize: 25,
-            [theme.breakpoints.down('sm')]: {
-                fontSize: 18,
-            },
-        }
     }),
 );
 
-export const Articles = ({ setEditArticleActive, setAddEditBtnState }: StateProps) => {
-
-    const { search } = useLocation();
-    const classes = useStyles();
-    const history = useHistory()
-   // let columns = width === 'xs' || width === 'sm'  ? 1 : 2;
-    const match = search.match(/selection=(.*)/);
-    const type = match?.[1];
-    const { posts, listArticles, readArticle, deleteArticle /* , showModal, AddEditBtnState */ } = useContext(BlogContext)
+export const Articles = ({ setEditArticleActive }: StateProps) => {
     
+    const history = useHistory()
+    const classes = useStyles();
+    const { search } = useLocation();
+    const match = search.match(/selection=(.*)/)
+    const type = match?.[1];
+    const { posts, listArticles, readArticle } = useContext(BlogContext)
+    //custom hooks
     useEffect(() => {
         listArticles()
     }, [])
 
-    const handleSelectedArticleClick = (id:string, event: React.MouseEvent<HTMLButtonElement, MouseEvent>, actions: string) => {
-        console.log(actions)
+    const handleSelectedArticleClick = (
+        id:string, 
+        event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+        ) => {
         event.preventDefault()
         readArticle(id)
-        if(actions === 'read') {
-            history.push(`/articles/${id}`)
-        } else {
-            setAddEditBtnState(true)
-            setEditArticleActive(true)
-            
-            //showModal(!AddEditBtnState)
-        }
+        history.push(`/articles/${id}`)
     }
     
     return (
-        <Grid className={classes.rootGrid}>
+        <Grid container className={classes.rootGrid} >
             {
                 posts == null ?  
                     <div className={classes.root}>
@@ -200,9 +176,9 @@ export const Articles = ({ setEditArticleActive, setAddEditBtnState }: StateProp
                                 lg={8}  
                                 className={classes.gridTile}
                                 >
-                                <div  className={classes.imgBackground} style={{backgroundImage: `url(${article && article.imgUrl})`}}/>
+                                <div className={classes.imgBackground} style={{backgroundImage: `url(${article && article.imgUrl})`}}/>
                                 <Box className={`${classes.titleBar}`}> 
-                                    <Button onClick={(event, actions='read') => handleSelectedArticleClick(article.id, event, actions)}>
+                                    <Button onClick={(event) => handleSelectedArticleClick(article.id, event)}>
                                         <Typography 
                                             variant='h5' 
                                             className={classes.titleFromBar}
@@ -231,7 +207,6 @@ export const Articles = ({ setEditArticleActive, setAddEditBtnState }: StateProp
                                         >
                                         {article.content.slice(0,75)}...
                                     </Typography>
-                                    
                                     <Box className={classes.categoryAndCrud}>
                                         <Typography
                                             className={classes.subtitles} 
@@ -239,19 +214,10 @@ export const Articles = ({ setEditArticleActive, setAddEditBtnState }: StateProp
                                             >
                                             {article.category.toUpperCase()}
                                         </Typography>
-                                        <Box style={{marginRight: '5px'}}>
-                                            <IconButton 
-                                                style={{color: '#fff176'}}
-                                                onClick={(event, actions='edit') => handleSelectedArticleClick(article.id, event, actions)}
-                                                className={classes.crudBtn}>
-                                                <EditIcon style={{color: '#fff176'}} className={classes.infoCrud}/>
-                                            </IconButton>
-                                            <IconButton color="secondary"
-                                                onClick={() => deleteArticle(article.id) }
-                                                className={classes.crudBtn}>
-                                                <DeleteOutlineIcon  className={classes.infoCrud}/>
-                                            </IconButton>
-                                        </Box>
+                                        <CrudBtn
+                                            mappedArticle={article}
+                                            setEditArticleActive={setEditArticleActive}
+                                        />
                                     </Box> 
                                     
                                 </Box> 

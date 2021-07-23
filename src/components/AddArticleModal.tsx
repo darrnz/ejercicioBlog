@@ -5,10 +5,9 @@ import { useForm, Controller } from "react-hook-form"
 import LinkIcon from '@material-ui/icons/Link';
 import { categories } from '../interfaces/interfaces'
 import BlogContext  from '../context/articles/context'
+import useOpenModal from '../hooks/useOpenModal'
 
 interface Props {
-    setAddEditBtnState: Dispatch<React.SetStateAction<boolean>>,
-    AddEditBtnState: boolean,
     editArticleActive: boolean,
     setEditArticleActive: Dispatch<React.SetStateAction<boolean>>
 }
@@ -58,14 +57,13 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const AddArticleModal = ({ 
-    setAddEditBtnState, AddEditBtnState, 
     setEditArticleActive, editArticleActive,
 } : Props) => {
     
     const classes = useStyles();
     const [modalStyle] = useState(getModalStyle);
     const { addArticle, readArticle, editArticle, article } = useContext(BlogContext)
-
+    const [openModal, closeModal, showModal] = useOpenModal()
     const { handleSubmit, control, setValue, formState: { isValid }, getValues } = useForm({mode: "onChange"});
 
     const handleOnClick = async() => {
@@ -78,15 +76,17 @@ export const AddArticleModal = ({
     }
 
     const hadleModalClose = () => {
-        //showModal(!AddEditBtnState)
-        setAddEditBtnState(false)
+        closeModal()
         setEditArticleActive(false)
         readArticle(null!)
     }
 
+    const handleModalOpen = () => {
+        openModal()
+    }
+
     const handleEditArticle = async() => {
         const updateArticleData = getValues()
-        //showModal(!AddEditBtnState) 
         editArticle(updateArticleData)
         hadleModalClose()
     }
@@ -111,7 +111,7 @@ export const AddArticleModal = ({
     
     return (
         <Modal
-            open={AddEditBtnState}
+            open={showModal}
             onClose={hadleModalClose}
             aria-labelledby="simple-modal-title"
             aria-describedby="simple-modal-de|scription"

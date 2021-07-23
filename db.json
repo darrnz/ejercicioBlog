@@ -1,8 +1,8 @@
 {
   "posts": [
     {
-      "title": "Consectetur adipiscing ",
-      "category": "Travel",
+      "title": "Consectetur adipiscing Router",
+      "category": "Business",
       "content": "Convallis aenean et tortor at risus viverra adipiscing at in. Volutpat lacus laoreet non curabitur. Proin sed libero enim sed. Congue nisi vitae suscipit tellus mauris a diam maecenas sed. Montes nascetur ridiculus mus mauris vitae ultricies. At augue eget arcu dictum. Tristique sollicitudin nibh sit amet commodo. Sed egestas egestas fringilla phasellus faucibus scelerisque eleifend donec pretium. Condimentum mattis pellentesque id nibh tortor id aliquet. Dignissim suspendisse in est ante in nibh. Ac felis donec et odio pellentesque diam volutpat commodo. Lorem sed risus ultricies tristique nulla aliquet enim tortor at. Vitae tortor condimentum lacinia quis vel eros. Eget sit amet tellus cras adipiscing enim. Gravida cum sociis natoque penatibus et magnis dis parturient. Ac felis donec et odio pellentesque diam volutpat commodo. Eu volutpat odio facilisis mauris sit. In massa tempor nec feugiat nisl pretium fusce id velit. Tortor posuere ac ut consequat semper. Ac orci phasellus egestas tellus rutrum tellus pellentesque eu.",
       "imgUrl": "https://image.shutterstock.com/image-photo/overhead-view-travelers-accessories-essential-600w-425996818.jpg",
       "id": "91011",
@@ -143,48 +143,6 @@
       ]
     },
     {
-      "title": "Vel quam elementum ",
-      "category": "Food",
-      "content": "Vel quam elementum pulvinar etiam non. Consectetur adipiscing elit pellentesque habitant morbi. Dignissim diam quis enim lobortis. Morbi tincidunt augue interdum velit euismod in. Auctor urna nunc id cursus metus aliquam eleifend. Sagittis aliquam malesuada bibendum arcu vitae elementum curabitur vitae nunc. Volutpat ac tincidunt vitae semper quis lectus nulla at. Amet venenatis urna cursus eget nunc. Faucibus et molestie ac feugiat sed lectus. Enim praesent elementum facilisis leo vel fringilla est ullamcorper eget. Lacus viverra vitae congue eu consequat. Ac tortor vitae purus faucibus ornare suspendisse sed nisi lacus. Pellentesque habitant morbi tristique senectus et netus et malesuada. Dolor sit amet consectetur adipiscing elit duis tristique.",
-      "imgUrl": "https://image.shutterstock.com/image-photo/various-spices-bowls-on-black-600w-1931420096.jpg",
-      "id": "41516",
-      "author": "Peter",
-      "comments": [
-        {
-          "author": "John",
-          "comment": "Vel quam elementum pulvinar etiam non. Consectetur adipiscing elit pellentesque habitant morbi. Dignissim diam quis enim lobortis. Morbi tincidunt augue interdum velit euismod in. Auctor urna nunc id cursus metus aliquam eleifend."
-        },
-        {
-          "author": "Sarah",
-          "comment": "Felis donec et odio pellentesque diam volutpat commodo sed. Purus in mollis nunc sed. Nisi scelerisque eu ultrices vitae auctor eu. "
-        },
-        {
-          "author": "Clark",
-          "comment": "Vel quam elementum pulvinar etiam non. Consectetur adipiscing elit pellentesque habitant morbi."
-        },
-        {
-          "comment": "Hola",
-          "author": "User43265"
-        },
-        {
-          "comment": "Hola",
-          "author": "User18273"
-        },
-        {
-          "comment": "Como estas",
-          "author": "User33411"
-        },
-        {
-          "comment": "Funcionando",
-          "author": "User74124"
-        },
-        {
-          "comment": "Hola",
-          "author": "User14772"
-        }
-      ]
-    },
-    {
       "title": "Morbi tincidunt augue",
       "content": "Vel quam elementum pulvinar etiam non. Consectetur adipiscing elit pellentesque habitant morbi. Dignissim diam quis enim lobortis. Morbi tincidunt augue interdum velit euismod in. Auctor urna nunc id cursus metus aliquam eleifend. Sagittis aliquam malesuada bibendum arcu vitae elementum curabitur vitae nunc. Volutpat ac tincidunt vitae semper quis lectus nulla at. Amet venenatis urna cursus eget nunc. Faucibus et molestie ac feugiat sed lectus. Enim praesent elementum facilisis leo vel fringilla est ullamcorper eget. Lacus viverra vitae congue eu consequat. Ac tortor vitae purus faucibus ornare suspendisse sed nisi lacus. Pellentesque habitant morbi tristique senectus et netus et malesuada. Dolor sit amet consectetur adipiscing elit duis tristique.",
       "category": "Food",
@@ -310,36 +268,6 @@
       "id": "27282"
     },
     {
-      "title": "Dignissim diam quis enim lobortis.",
-      "content": "Vel quam elementum pulvinar etiam non. Consectetur adipiscing elit pellentesque habitant morbi. Dignissim diam quis enim lobortis. Morbi tincidunt augue interdum velit euismod in. Auctor urna nunc id cursus metus aliquam eleifend. Sagittis aliquam malesuada bibendum arcu vitae elementum curabitur vitae nunc. Volutpat ac tincidunt vitae semper quis lectus nulla at. Amet venenatis urna cursus eget nunc. Faucibus et molestie ac feugiat sed lectus. Enim praesent elementum facilisis leo vel fringilla est ullamcorper eget. Lacus viverra vitae congue eu consequat. Ac tortor vitae purus faucibus ornare suspendisse sed nisi lacus. Pellentesque habitant morbi tristique senectus et netus et malesuada. Dolor sit amet consectetur adipiscing elit duis tristique.",
-      "category": "Food",
-      "comments": [
-        {
-          "author": "John",
-          "comment": "Vel quam elementum pulvinar etiam non. Consectetur adipiscing elit pellentesque habitant morbi. Dignissim diam quis enim lobortis. Morbi tincidunt augue interdum velit euismod in. Auctor urna nunc id cursus metus aliquam eleifend."
-        },
-        {
-          "author": "Sarah",
-          "comment": "Felis donec et odio pellentesque diam volutpat commodo sed. Purus in mollis nunc sed. Nisi scelerisque eu ultrices vitae auctor eu. "
-        },
-        {
-          "author": "Clark",
-          "comment": "Vel quam elementum pulvinar etiam non. Consectetur adipiscing elit pellentesque habitant morbi."
-        },
-        {
-          "author": "Sarah",
-          "comment": "Felis donec et odio pellentesque diam volutpat commodo sed. Purus in mollis nunc sed. Nisi scelerisque eu ultrices vitae auctor eu. "
-        },
-        {
-          "author": "Clark",
-          "comment": "Vel quam elementum pulvinar etiam non. Consectetur adipiscing elit pellentesque habitant morbi."
-        }
-      ],
-      "imgUrl": "https://image.shutterstock.com/image-photo/jars-dried-herbs-spices-on-600w-1973828351.jpg",
-      "author": "Sarah",
-      "id": "93031"
-    },
-    {
       "title": "Consectetur adipiscing elit pellentesque habitant morbi",
       "category": "Travel",
       "content": "Vel quam elementum pulvinar etiam non. Consectetur adipiscing elit pellentesque habitant morbi. Dignissim diam quis enim lobortis. Morbi tincidunt augue interdum velit euismod in. Auctor urna nunc id cursus metus aliquam eleifend. Sagittis aliquam malesuada bibendum arcu vitae elementum curabitur vitae nunc. Volutpat ac tincidunt vitae semper quis lectus nulla at. Amet venenatis urna cursus eget nunc. Faucibus et molestie ac feugiat sed lectus. Enim praesent elementum facilisis leo vel fringilla est ullamcorper eget. Lacus viverra vitae congue eu consequat. Ac tortor vitae purus faucibus ornare suspendisse sed nisi lacus. Pellentesque habitant morbi tristique senectus et netus et malesuada. Dolor sit amet consectetur adipiscing elit duis tristique.",
@@ -347,22 +275,42 @@
       "id": "32333",
       "author": "Clark",
       "comments": [
-        {}
+        {},
+        {
+          "comment": "Holasdasdafdf",
+          "author": "User96381"
+        },
+        {
+          "comment": "asdasdasd",
+          "author": "User22336"
+        }
       ]
     },
     {
       "title": "Vel ",
-      "content": "Vel quam elementum pulvinar etiam non. Consectetur adipiscing elit pellentesque habitant morbi. Dignissim diam quis enim lobortis. Morbi tincidunt augue interdum velit euismod in. Auctor urna nunc id cursus metus aliquam eleifend. Sagittis aliquam malesuada bibendum arcu vitae elementum curabitur vitae nunc. Volutpat ac tincidunt vitae semper quis lectus nulla at. Amet venenatis urna cursus eget nunc. Faucibus et molestie ac feugiat sed lectus. Enim praesent elementum facilisis leo vel fringilla est ullamcorper eget. Lacus viverra vitae congue eu consequat. Ac tortor vitae purus faucibus ornare suspendisse sed nisi lacus. Pellentesque habitant morbi tristique senectus et netus et malesuada. Dolor sit amet consectetur adipiscing elit duis tristique.",
       "category": "Travel",
+      "content": "Vel quam elementum pulvinar etiam non. Consectetur adipiscing elit pellentesque habitant morbi. Dignissim diam quis enim lobortis. Morbi tincidunt augue interdum velit euismod in. Auctor urna nunc id cursus metus aliquam eleifend. Sagittis aliquam malesuada bibendum arcu vitae elementum curabitur vitae nunc. Volutpat ac tincidunt vitae semper quis lectus nulla at. Amet venenatis urna cursus eget nunc. Faucibus et molestie ac feugiat sed lectus. Enim praesent elementum facilisis leo vel fringilla est ullamcorper eget. Lacus viverra vitae congue eu consequat. Ac tortor vitae purus faucibus ornare suspendisse sed nisi lacus. Pellentesque habitant morbi tristique senectus et netus et malesuada. Dolor sit amet consectetur adipiscing elit duis tristique.",
+      "imgUrl": "https://image.shutterstock.com/image-photo/aerial-view-on-road-forest-600w-1157554171.jpg",
+      "id": "43536",
+      "author": "Peter",
       "comments": [
         {
           "author": "Sarah",
           "comment": "Felis donec et odio pellentesque diam volutpat commodo sed. Purus in mollis nunc sed. Nisi scelerisque eu ultrices vitae auctor eu. "
+        },
+        {
+          "comment": "gfdgdfrtrger",
+          "author": "User93630"
+        },
+        {
+          "comment": "sdfdfsdfwert",
+          "author": "User69516"
+        },
+        {
+          "comment": "wqetw3456",
+          "author": "User64015"
         }
-      ],
-      "imgUrl": "https://image.shutterstock.com/image-photo/aerial-view-on-road-forest-600w-1157554171.jpg",
-      "author": "Peter",
-      "id": "43536"
+      ]
     },
     {
       "title": "Hola",
@@ -374,15 +322,6 @@
       "category": "All"
     },
     {
-      "title": "Hola",
-      "author": "User98979",
-      "id": "44155",
-      "content": "Holahola",
-      "comments": [],
-      "imgUrl": "https://th.bing.com/th/id/R3e387bfb15e5403598e84574f3d96f6d?rik=mko1JaW0UKg2SA&pid=ImgRaw",
-      "category": "Work"
-    },
-    {
       "title": "sdfsdf",
       "author": "User11323",
       "id": "74535",
@@ -392,40 +331,13 @@
       "category": "Work"
     },
     {
-      "title": "Holattt",
-      "author": "User21626",
-      "id": "22752",
-      "content": "Holahola",
-      "comments": [],
-      "imgUrl": "https://th.bing.com/th/id/Rb5a325d64dc2c1ca82e83fb13dc02ed4?rik=tkD5heUCjUhqyw&pid=ImgRaw",
-      "category": "Work"
-    },
-    {
       "title": "Vel quam ",
       "author": "User78093",
       "id": "66373",
       "content": "Holahola",
       "comments": [],
       "imgUrl": "https://th.bing.com/th/id/R3e387bfb15e5403598e84574f3d96f6d?rik=mko1JaW0UKg2SA&pid=ImgRaw",
-      "category": "Travel"
-    },
-    {
-      "title": "Vel quam ",
-      "author": "User92490",
-      "id": "98153",
-      "content": "fdsfsdfasdqwerwefdsfwwefr2321423423423rewfdwfsdfsdf",
-      "comments": [],
-      "imgUrl": "https://th.bing.com/th/id/Rb5a325d64dc2c1ca82e83fb13dc02ed4?rik=tkD5heUCjUhqyw&pid=ImgRaw",
       "category": "Work"
-    },
-    {
-      "title": "Hola",
-      "content": "Holahola",
-      "category": "Work",
-      "imgUrl": "https://th.bing.com/th/id/R0e1ee916da3b61224ce9d470208f8419?rik=zv%2fMOIVfe0Azlg&pid=ImgRaw",
-      "id": "16750",
-      "author": "User61437",
-      "comments": []
     },
     {
       "title": "Prueba reducer 2",

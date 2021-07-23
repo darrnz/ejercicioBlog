@@ -7,41 +7,29 @@ import { Articles } from './components/Articles'
 import { AddArticleBtn } from './components/AddArticleBtn'
 import { ReadArticle } from './components/ReadArticle'
 import BlogContext  from './context/articles/context'
+import useOpenModal from './hooks/useOpenModal'
 //npx json-server --watch db.json --port 3004
 
 
 function App() {
 
-    const [AddEditBtnState, setAddEditBtnState] = useState(false)
     const [editArticleActive, setEditArticleActive] = useState<boolean>(false)
-
     const { article } = useContext(BlogContext)
-    
-    //console.log(!AddEditBtnState)
-    function showModalForm() {
-        if(AddEditBtnState || editArticleActive) {
-            return (<AddArticleModal 
-                    setAddEditBtnState={setAddEditBtnState} 
-                    AddEditBtnState={AddEditBtnState}
-                    setEditArticleActive={setEditArticleActive}
-                    editArticleActive={editArticleActive}
-                />)
-        }
-            
-    }
-    console.log(article)
+    const [openModal, closeModal, showModal] = useOpenModal()
 
     return (
         
             
         <Router>
         
-            <AddArticleBtn 
-                setAddEditBtnState={setAddEditBtnState}
-                AddEditBtnState={AddEditBtnState} />
+            <AddArticleBtn/>
 
-            {showModalForm()}
-            
+            {showModal? (<AddArticleModal 
+                    setEditArticleActive={setEditArticleActive}
+                    editArticleActive={editArticleActive}
+                />) : ''
+        } 
+
             {!article ? <Header/> : ''}
 
             <Switch>
@@ -49,7 +37,6 @@ function App() {
 
                 <Route exact path={`/articles`} render={
                     () => <Articles 
-                        setAddEditBtnState={setAddEditBtnState}
                         setEditArticleActive={setEditArticleActive}
                         />}
                 />
@@ -60,7 +47,7 @@ function App() {
     
         </Router>
     
-  );
+    );
 }
 
 export default App;

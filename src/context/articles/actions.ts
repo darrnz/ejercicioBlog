@@ -40,13 +40,6 @@ export interface AddComment {
     payload: ArticlesContextStruct['article']
 }
 
-
-
-/* export interface AddEditBtnState {
-    type: ActionType.AddEditBtnState
-    payload: boolean
-}
- */
 export type BlogActions =    
     AddArticle |
     EditArticle |
@@ -54,4 +47,3 @@ export type BlogActions =
     DeleteArticle |
     ReadArticle |
     AddComment
-    //AddEditBtnState 

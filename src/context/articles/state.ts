@@ -4,17 +4,22 @@ export interface ArticlesContextStruct {
     posts: ArticleStruct[]
     article: ArticleStruct
     listArticles: () => Promise<void>
-    readArticle:(idArticle: string) => void
+    readArticle:(
+        idArticle: string
+        ) => void
     addComment: (
         article: ArticlesContextStruct['article'],
         newComment: string,
         author: string
-    ) => Promise<void>
-    addArticle: (newArticleData: {[x: string]: any} ) => Promise<void>,
+        ) => Promise<void>
+    addArticle: (
+        newArticleData: {[x: string]: any} 
+        ) => Promise<void>,
     editArticle: (updateArticleData: {[x: string]: any},
-    ) => Promise<void>
-    deleteArticle: (idArticle: string) => Promise<void>
-    //showModal: (toggleAddEdit: boolean) => void
+        ) => Promise<void>
+    deleteArticle: (
+        idArticle: string
+        ) => Promise<void>
 }
 
 export const initialState: ArticlesContextStruct = {

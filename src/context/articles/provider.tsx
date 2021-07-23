@@ -35,7 +35,7 @@ export const BlogContextProvider: React.FC = ({children}) => {
         ) => {
         const articleWithNewComment = await fetch(`http://localhost:3004/posts/${article.id}`, {
             method:'PUT',
-            headers: { 'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 title: article.title,
                 category: article.category,
@@ -80,7 +80,6 @@ export const BlogContextProvider: React.FC = ({children}) => {
                 ...state.article, title, content, imgUrl, category
             })
         }).then(res => res.json())
-
         dispatch({
             type: ActionType.EditArticle,
             payload: responseUpdate
@@ -99,27 +98,18 @@ export const BlogContextProvider: React.FC = ({children}) => {
         })
     }
 
-/*     const showModal = (toggleAddEdit: boolean) => {
-        dispatch({
-            type: ActionType.AddEditBtnState,
-            payload: toggleAddEdit
-        })
-    } */
-
     return(
 
         <BlogContext.Provider 
             value={{
                 posts: state.posts,
                 article: state.article,
-                //AddEditBtnState: state.AddEditBtnState,
                 listArticles: listArticles,
                 readArticle: readArticle,
                 addComment: addComment,
                 addArticle: addArticle,
                 editArticle: editArticle, 
                 deleteArticle: deleteArticle,
-                // showModal: showModal
             }}>
             {children}
         </BlogContext.Provider>

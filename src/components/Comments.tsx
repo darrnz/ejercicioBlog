@@ -1,8 +1,9 @@
-import React, { Dispatch, useEffect, useContext } from 'react'
+import { useContext } from 'react'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import { Box, Grid, Container, Typography, Button, TextField } from '@material-ui/core'
 import { useForm} from "react-hook-form";
 import BlogContext  from '../context/articles/context'
+
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -33,10 +34,9 @@ export const Comments = () => {
     const { article, addComment } = useContext(BlogContext)
     const classes = useStyles()
     const { register, handleSubmit, reset, watch, setValue, formState: { isDirty }, getValues } = useForm();
-    const randomNum = String(Math.floor(Math.random() * 90000) + 10000)
 
     const addNewComment = async() => {
-        setValue('author', `User${randomNum}`)
+        setValue('author', `User${String(Math.floor(Math.random() * 90000) + 10000)}`)
         const { author, comment } = getValues()
         addComment(article, comment, author)
         reset()

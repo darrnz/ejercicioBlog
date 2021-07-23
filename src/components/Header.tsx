@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link  as RouterLink, useLocation} from 'react-router-dom';
+import { Link  as RouterLink } from 'react-router-dom';
 import { useMediaQuery, Box, Container, Typography, AppBar, Tabs, Tab } from '@material-ui/core'
 import { makeStyles, Theme, createMuiTheme, ThemeProvider, responsiveFontSizes } from '@material-ui/core/styles';
 import { categories } from '../interfaces/interfaces'
@@ -18,41 +18,36 @@ const useStyles = makeStyles((theme: Theme) => ({
         flexWrap: 'wrap-reverse', 
         justifyContent: 'center',
         alignContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        right: 0,
+        left:0,
     },
-
     tab: {
         fontSize: 20,
         textDecoration:'none',
-        textAlign: 'center',
-        
         [theme.breakpoints.down('sm')]: {
             textAlign: 'center',
-            fontSize: 15,
+            fontSize: 12,
         },
         '&:hover': {
             borderBottom: 'solid #888787'
         },
     },
-
-    activeTab: {
-
-            borderBottom: 'solid'
-    },
-
     tabList: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignContent: 'center',
-        alignItems: 'center',
-        textAlign: 'center',
         margin: '0 30px',
+        right: 0,
+        alignContent: 'center',
     },
     link:{
         textDecoration:'none',
         width: '100%', 
         color: 'black'
-    }
+    },
+    appbar: {
+        display: 'flex', 
+        justifyContent: 'center',
+        alignContent: 'center'
+    },
 }))
 
 let theme = createMuiTheme();
@@ -61,20 +56,16 @@ theme = responsiveFontSizes(theme);
 export const Header = () => {
 
     const classes = useStyles();
-    const { search } = useLocation();
-    const match = search.match(/selection=(.*)/);
-    const type = match?.[1];
-
     const [value, setValue] = React.useState(0)
-console.log(value)
+
     const handleChangeTab = (event: React.ChangeEvent<{}>, newValue: number) => {
-        console.log(newValue)
+        event.preventDefault()
         setValue(newValue);
     };
 
     return (
         <ThemeProvider theme={theme}>
-        <Container>
+        <Container >
             <Box textAlign='center'>
 
             <Typography variant='h6' gutterBottom style={{color:'#f19225'}}>
@@ -88,14 +79,15 @@ console.log(value)
             </Typography>
             </Box>
             <Box className={classes.root}>
-                <AppBar position="static" color='transparent'>
+                <AppBar position="static" color='transparent' className={classes.appbar}>
                     <Tabs 
                         value={value}
                         className={classes.tabList}
                         onChange={handleChangeTab} 
                         aria-label="simple tabs example"
                         variant="scrollable"
-                        scrollButtons="off"
+                        scrollButtons="on"
+
                         >
                     {
                         categories.map((category, index) => {
