@@ -1,5 +1,3 @@
-import { AddEditBtnState } from './state'
-
 export enum ActionType {
     ShowModal,
     EditModeToggle,

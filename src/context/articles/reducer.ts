@@ -2,8 +2,6 @@ import { Reducer } from 'react'
 import  { ArticlesContextStruct } from './state'
 import { ActionType, BlogActions } from './actions'
 
-
-//buscar type
 export const blogReducer: Reducer<ArticlesContextStruct,BlogActions> = (
     state, 
     action
@@ -14,13 +12,19 @@ export const blogReducer: Reducer<ArticlesContextStruct,BlogActions> = (
                 ...state,
                 posts: [...action.payload]
             }
-    
+
         case ActionType.ReadArticle:
             return {
-                
                 ...state,
                 article: state.posts.filter(post => post.id === action.payload)[0]
             }
+        
+        case ActionType.SelectArticleToEdit: {
+            return {
+                ...state,
+                articleToEdit: state.posts.filter(post => post.id === action.payload)[0]
+            }
+        }    
 
         case ActionType.AddComment:
             console.log(action.payload)
@@ -34,14 +38,14 @@ export const blogReducer: Reducer<ArticlesContextStruct,BlogActions> = (
                 ...state,
                 posts: [...state.posts, action.payload]
             }
-        
-        ////es neceario?
+
         case ActionType.EditArticle:
             const editedArticleIndex = state.posts.findIndex(article => article.id === action.payload.id)
             state.posts[editedArticleIndex] = action.payload
             return {
                 ...state,
-                posts: [...state.posts]
+                posts: [...state.posts],
+                articleToEdit: null!
             }
         
         case ActionType.DeleteArticle: 
@@ -50,12 +54,6 @@ export const blogReducer: Reducer<ArticlesContextStruct,BlogActions> = (
                 posts: state.posts.filter((article) => article.id !== action.payload)
             }
 
-/*         case ActionType.AddEditBtnState:
-            return {
-                ...state,
-                AddEditBtnState: action.payload
-            } */
-    
         default:
             return state;
     }

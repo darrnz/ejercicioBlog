@@ -28,6 +28,13 @@ export const BlogContextProvider: React.FC = ({children}) => {
         })
     }
 
+    const selectArticleToEdit = (idArticle: string) => {
+        dispatch({
+            type: ActionType.SelectArticleToEdit,
+            payload: idArticle
+        })
+    }
+
     const addComment = async(
         article: ArticlesContextStruct['article'],
         newComment: string,
@@ -104,8 +111,10 @@ export const BlogContextProvider: React.FC = ({children}) => {
             value={{
                 posts: state.posts,
                 article: state.article,
+                articleToEdit: state.articleToEdit,
                 listArticles: listArticles,
                 readArticle: readArticle,
+                selectArticleToEdit: selectArticleToEdit,
                 addComment: addComment,
                 addArticle: addArticle,
                 editArticle: editArticle, 

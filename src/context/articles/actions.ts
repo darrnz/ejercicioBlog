@@ -6,8 +6,8 @@ export enum ActionType {
     DeleteArticle,
     ArticleList,
     ReadArticle,
-    AddComment
-    //AddEditBtnState,
+    AddComment,
+    SelectArticleToEdit
 }
 
 export interface AddArticle {
@@ -40,10 +40,16 @@ export interface AddComment {
     payload: ArticlesContextStruct['article']
 }
 
+export interface SelectArticleToEdit {
+    type: ActionType.SelectArticleToEdit
+    payload: ArticlesContextStruct['article']['id']
+}
+
 export type BlogActions =    
     AddArticle |
     EditArticle |
     ArticleList |
     DeleteArticle |
     ReadArticle |
-    AddComment
+    AddComment |
+    SelectArticleToEdit

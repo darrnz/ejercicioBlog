@@ -1,13 +1,15 @@
 export interface AddEditBtnInterface {
-    showModal: boolean,
-    editArticleMode: boolean,
+    showModal: boolean
+    editState: boolean
     setModalOpen: () => void,
     setModalClose: () => void
+    toggleEditMode: () => void
 }
 
 export const AddEditBtnState = {
     showModal: false,
-    editArticleMode: false,
+    editState: false,
     setModalOpen: () => {},
     setModalClose: () => {},
+    toggleEditMode: () => {},
 }

@@ -1,12 +1,10 @@
 import { useContext } from 'react'
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
+import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Box, Grid, Container, Typography, Button, TextField } from '@material-ui/core'
 import { useForm} from "react-hook-form";
 import BlogContext  from '../context/articles/context'
 
-
-
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         commentsContainer: {
             paddingLeft: '25%',

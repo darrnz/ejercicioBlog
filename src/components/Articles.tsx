@@ -1,14 +1,11 @@
-import React, { useEffect, Dispatch, useContext } from 'react'
+import React, { useContext } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
 import { CircularProgress, Grid, Typography, Box, Button } from '@material-ui/core'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import CrudBtn from './CrudBtn'
 import ChatIcon from '@material-ui/icons/Chat';
 import BlogContext from '../context/articles/context' 
-
-interface StateProps {
-    setEditArticleActive: Dispatch<React.SetStateAction<boolean>>
-}
+import useUpdateList from '../hooks/useUpdateList'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -136,28 +133,32 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export const Articles = ({ setEditArticleActive }: StateProps) => {
+export const Articles = () => {
     
     const history = useHistory()
     const classes = useStyles();
     const { search } = useLocation();
     const match = search.match(/selection=(.*)/)
     const type = match?.[1];
-    const { posts, listArticles, readArticle } = useContext(BlogContext)
-    //custom hooks
-    useEffect(() => {
-        listArticles()
-    }, [])
+
+    const { posts, readArticle } = useContext(BlogContext)
+    const [ UpdateList ] = useUpdateList()
+
+    UpdateList()
+
+    console.log(match)
+    console.log(type)
+    console.log(posts)
 
     const handleSelectedArticleClick = (
         id:string, 
         event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-        ) => {
+    ) => {
         event.preventDefault()
         readArticle(id)
         history.push(`/articles/${id}`)
     }
-    
+
     return (
         <Grid container className={classes.rootGrid} >
             {
@@ -216,7 +217,6 @@ export const Articles = ({ setEditArticleActive }: StateProps) => {
                                         </Typography>
                                         <CrudBtn
                                             mappedArticle={article}
-                                            setEditArticleActive={setEditArticleActive}
                                         />
                                     </Box> 
                                     

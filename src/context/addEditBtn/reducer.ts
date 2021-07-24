@@ -10,13 +10,20 @@ export const AddEditBtnReducer: Reducer<AddEditBtnInterface, AddEditBtnActions> 
         case ActionType.ShowModal:
             return {
                 ...state,
-                showModal: true
+                showModal: !state.showModal
             }
         
         case ActionType.CloseModal:
             return {
                 ...state,
-                showModal: false,
+                showModal: !state.showModal,
+                editState: false
+            }
+
+        case ActionType.EditModeToggle:
+            return {
+                ...state,
+                editState: true
             }
 
         default:

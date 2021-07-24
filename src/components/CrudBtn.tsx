@@ -1,4 +1,4 @@
-import React, { Dispatch, useContext } from 'react'
+import React, { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { IconButton, Box } from '@material-ui/core'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
@@ -10,7 +10,6 @@ import { ArticleStruct } from '../interfaces/interfaces';
 import useOpenModal from '../hooks/useOpenModal'
 
 interface StateProps {
-    setEditArticleActive: Dispatch<React.SetStateAction<boolean>>
     mappedArticle: ArticleStruct
 }
 
@@ -36,24 +35,34 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-function CrudBtn({ setEditArticleActive, mappedArticle }: StateProps) {
+function CrudBtn({ mappedArticle }: StateProps) {
+
     const classes = useStyles();
     const history = useHistory()
-    const [openModal, closeModal, modalStatus] = useOpenModal()
-    const { readArticle, deleteArticle } = useContext(BlogContext)
-    
+    const { editMode } = useOpenModal()
+    const { readArticle, deleteArticle, selectArticleToEdit } = useContext(BlogContext)
+
     const handleSelectedArticleClick = (
         id:string, 
-        event: React.MouseEvent<HTMLButtonElement, MouseEvent>, 
+        event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
         actions: string
-        ) => {
+    ) => {
         event.preventDefault()
-        readArticle(id)
-        if(actions === 'read') {
-            history.push(`/articles/${id}`)
-        } else {
-            openModal()
-            setEditArticleActive(true)
+        console.log(actions)
+        switch(true) {
+            case actions === 'read':
+                readArticle(id)
+                history.push(`/articles/${id}`)
+                break;
+            case actions === 'edit':
+                selectArticleToEdit(id)
+                editMode()
+                break;
+            case actions === 'delete':
+                deleteArticle(id)
+                break;
+            default:
+                break;
         }
     }
     
@@ -72,7 +81,7 @@ function CrudBtn({ setEditArticleActive, mappedArticle }: StateProps) {
                 <EditIcon style={{color: '#fff176'}} className={classes.iconBtnDrw}/>
             </IconButton>
             <IconButton color="secondary"
-                onClick={() => deleteArticle(mappedArticle.id) }
+                onClick={(event, actions='delete') => handleSelectedArticleClick(mappedArticle.id, event, actions)}
                 >
                 <DeleteOutlineIcon  className={classes.iconBtnDrw}/>
             </IconButton>

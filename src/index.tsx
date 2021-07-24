@@ -7,13 +7,14 @@ import AddEditBtnProvider from './context/addEditBtn/provider'
 
 ReactDOM.render(
   <React.StrictMode>
-    <AddEditBtnProvider>
+    
     <BlogContextProvider>
+    <AddEditBtnProvider>
     
       <App />
-    
-    </BlogContextProvider>
     </AddEditBtnProvider>
+    </BlogContextProvider>
+    
   </React.StrictMode>,
   document.getElementById('root')
 );

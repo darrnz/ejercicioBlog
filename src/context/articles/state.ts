@@ -3,8 +3,12 @@ import { ArticleStruct } from '../../interfaces/interfaces'
 export interface ArticlesContextStruct {
     posts: ArticleStruct[]
     article: ArticleStruct
+    articleToEdit: ArticleStruct
     listArticles: () => Promise<void>
     readArticle:(
+        idArticle: string
+        ) => void
+    selectArticleToEdit:(
         idArticle: string
         ) => void
     addComment: (
@@ -25,12 +29,13 @@ export interface ArticlesContextStruct {
 export const initialState: ArticlesContextStruct = {
     posts: [],
     article: null!,
+    articleToEdit: null!,
     listArticles: async() => {},
     readArticle:(id) => {},
+    selectArticleToEdit: (id) => {},
     addComment: async() => {},
     addArticle: async() => {},
     editArticle:  async() => {},
     deleteArticle: async() => {},
-
 }
 

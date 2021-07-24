@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react'
-import { AddEditBtnInterface, AddEditBtnState } from './state'
+import { AddEditBtnState } from './state'
 import { AddEditBtnReducer } from './reducer'
 import { ActionType } from './actions'
 import AddEditBtnContext from './context'
@@ -20,13 +20,20 @@ const AddEditBtnProvider: React.FC = ({ children }) => {
         })
     }
 
+    const toggleEditMode = () => {
+        dispatch({
+            type: ActionType.EditModeToggle
+        })
+    }
+
     return(
         <AddEditBtnContext.Provider 
             value={{
                 showModal: state.showModal,
-                editArticleMode: state.editArticleMode,
+                editState: state.editState,
                 setModalOpen: setModalOpen,
-                setModalClose: setModalClose
+                setModalClose: setModalClose,
+                toggleEditMode: toggleEditMode
             }}    
         >
             {children}

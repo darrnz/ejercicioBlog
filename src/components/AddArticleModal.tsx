@@ -1,4 +1,4 @@
-import React, { Dispatch, useState, useEffect, useContext } from 'react'
+import {  useState, useEffect, useContext } from 'react'
 import { Modal, FormControl, Select, MenuItem ,InputLabel, Typography, InputAdornment, TextField , Container, Button, Grid, Box } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { useForm, Controller } from "react-hook-form"
@@ -6,11 +6,6 @@ import LinkIcon from '@material-ui/icons/Link';
 import { categories } from '../interfaces/interfaces'
 import BlogContext  from '../context/articles/context'
 import useOpenModal from '../hooks/useOpenModal'
-
-interface Props {
-    editArticleActive: boolean,
-    setEditArticleActive: Dispatch<React.SetStateAction<boolean>>
-}
 
 function getModalStyle() {
     const top = 50 
@@ -56,14 +51,12 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export const AddArticleModal = ({ 
-    setEditArticleActive, editArticleActive,
-} : Props) => {
+export const AddArticleModal = () => {
     
     const classes = useStyles();
     const [modalStyle] = useState(getModalStyle);
-    const { addArticle, readArticle, editArticle, article } = useContext(BlogContext)
-    const [openModal, closeModal, showModal] = useOpenModal()
+    const { addArticle, editArticle, articleToEdit } = useContext(BlogContext)
+    const { closeModal, showModal, editState } = useOpenModal()
     const { handleSubmit, control, setValue, formState: { isValid }, getValues } = useForm({mode: "onChange"});
 
     const handleOnClick = async() => {
@@ -71,48 +64,38 @@ export const AddArticleModal = ({
         setValue('author', `User${String(Math.floor(Math.random() * 90000) + 10000)}`)
         setValue('comments', [])
         const newArticleData = getValues()
-        hadleModalClose();
+        closeModal();
         addArticle(newArticleData)
-    }
-
-    const hadleModalClose = () => {
-        closeModal()
-        setEditArticleActive(false)
-        readArticle(null!)
-    }
-
-    const handleModalOpen = () => {
-        openModal()
     }
 
     const handleEditArticle = async() => {
         const updateArticleData = getValues()
-        editArticle(updateArticleData)
-        hadleModalClose()
+        await editArticle(updateArticleData)
+        closeModal()
     }
 
     const setOriginalContent = () => {
-            const fields = Object.keys(article)
-            console.log(fields)
-            /* fields.forEach((field) => {
-                setValue(field, selectedArticleToRead[field])
-            })  */
-            setValue('title', article.title)
-            setValue('content', article.content)
-            setValue('category', article.category)
-            setValue('imgUrl', article.imgUrl)
+                const fields = Object.keys(articleToEdit)
+                /* fields.forEach((field) => {
+                    setValue(field, selectedArticleToRead[field])
+                })  */
+                setValue('title', articleToEdit.title)
+                setValue('content', articleToEdit.content)
+                setValue('category', articleToEdit.category)
+                setValue('imgUrl', articleToEdit.imgUrl)
     }
 
     useEffect(() => {
-        if(editArticleActive) {
-            setOriginalContent()
+        if(editState){
+        setOriginalContent()
+    }
         }
-    }, [])
-    
+    , [])
+
     return (
         <Modal
             open={showModal}
-            onClose={hadleModalClose}
+            onClose={() => closeModal()}
             aria-labelledby="simple-modal-title"
             aria-describedby="simple-modal-de|scription"
         >
@@ -120,10 +103,12 @@ export const AddArticleModal = ({
             <Container style={modalStyle} className={classes.paper}>
 
             <Typography component="h1" variant="h5" style={{textAlign:'center', marginTop: '5px'}} >
-                {editArticleActive? 'Edita' : 'Agrega'} un artículo
+                {editState? 'Edita' : 'Agrega'} un artículo
             </Typography>
 
-            <form className={classes.form} onSubmit={editArticleActive? handleSubmit(handleEditArticle) : handleSubmit(handleOnClick)}>
+            <form 
+                className={classes.form} 
+                onSubmit={editState? handleSubmit(handleEditArticle) : handleSubmit(handleOnClick)}>
             <Grid spacing={3} container alignItems="center" justify="center" direction="column">
                 <Grid item container xs >
                     <Controller 
@@ -136,7 +121,7 @@ export const AddArticleModal = ({
                             fullWidth
                             required
                             label="Escribe el título"
-                            defaultValue={article?.title}
+                            defaultValue={articleToEdit?.title}
                             />
                         }
                     />
@@ -154,7 +139,7 @@ export const AddArticleModal = ({
                             placeholder='Escribe el contenido'
                             fullWidth
                             required
-                            defaultValue={article?.content}
+                            defaultValue={articleToEdit?.content}
                             />
                         }        
                     />
@@ -166,7 +151,7 @@ export const AddArticleModal = ({
                             name='category'
                             control={control}
                             render={({field}) => <Select
-                                defaultValue={article?.category} 
+                                defaultValue={articleToEdit?.category} 
                                 {...field}
                                 required
                                 label='Selecciona la categoría'>
@@ -192,7 +177,7 @@ export const AddArticleModal = ({
                                 endAdornment:<InputAdornment position="end"><LinkIcon/></InputAdornment>
                             }}
                             required
-                            defaultValue={article?.imgUrl} 
+                            defaultValue={articleToEdit?.imgUrl} 
                         />
                     }
                     />
@@ -208,13 +193,13 @@ export const AddArticleModal = ({
                         <Button type='submit'                        
                                 variant="contained" 
                                 color="secondary"
-                                onClick={hadleModalClose}
+                                onClick={()=>closeModal()}
                         >
                             Cancelar
                         </Button>
                         
                         {
-                            editArticleActive === false ?
+                            editState === false ?
                             <Button 
                                 type='submit'                        
                                 variant="contained" 

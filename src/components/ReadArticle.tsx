@@ -91,7 +91,6 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-
 export const ReadArticle = () => {
 
     const classes = useStyles()
@@ -102,7 +101,7 @@ export const ReadArticle = () => {
         history.push(`/articles?selection=${article?.category}`)
         readArticle(null!)
     }
-   
+    
     return (
         <Container className={classes.root}>
             <Container className={classes.headContainer} style={{backgroundImage: `url(${article && article.imgUrl})`}}>
