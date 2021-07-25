@@ -140,7 +140,6 @@ export const Articles = () => {
     const [ UpdateList ] = useUpdateList()
     const { pushArticle, searchURLResult } = useHistoryPush()
 
-
     UpdateList()
 
     const handleSelectedArticleClick = (

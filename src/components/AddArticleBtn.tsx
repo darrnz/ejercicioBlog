@@ -29,16 +29,12 @@ export const AddArticleBtn = () => {
     const [hovering, setHovering] = useState(false)
     const { openModal } = useOpenModal()
 
-    const handleHover = () => {
-        setHovering(!hovering)
-    }
-
     return (
         <div className={classes.root}>
             {
             hovering? 
             <Fab 
-                onMouseLeave={handleHover}
+                onMouseLeave={()=>setHovering(!hovering)}
                 variant="extended" 
                 color="secondary" 
                 aria-label="edit" 
@@ -49,7 +45,7 @@ export const AddArticleBtn = () => {
             </Fab> 
         :
             <Fab 
-                onMouseEnter={handleHover} 
+                onMouseEnter={()=>setHovering(!hovering)} 
                 color="secondary" 
                 aria-label="edit" 
                 onClick={openModal} 
