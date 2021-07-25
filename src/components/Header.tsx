@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link  as RouterLink, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Box, Container, Typography, AppBar, Tabs, Tab } from '@material-ui/core'
 import { makeStyles, Theme, createMuiTheme, ThemeProvider, responsiveFontSizes } from '@material-ui/core/styles';
 import { categories } from '../interfaces/interfaces'
@@ -55,18 +55,19 @@ theme = responsiveFontSizes(theme);
 
 export const Header = () => {
 
+    const history = useHistory()
     const classes = useStyles();
-    const { search } = useLocation();
-    const match = search.match(/selection=(.*)/);
-    const type = match?.[1];
     const [value, setValue] = useState(0)
 
     const handleChangeTab = (event: React.ChangeEvent<{}>, newValue: number) => {
         event.preventDefault()
         setValue(newValue);
     };
-    console.log(match)
-    console.log(search)
+
+    const redirectUrl = (categorySelected: string) => {
+        history.push(`/articles?selection=${categorySelected}`)
+    }
+    
     return (
         <ThemeProvider theme={theme}>
         <Container >
@@ -101,8 +102,8 @@ export const Header = () => {
                                     label={category} 
                                     className={classes.tab} 
                                     {...a11yProps(index)}
-                                    component={RouterLink} 
-                                    to={`/articles?selection=${category}`}>
+                                    onClick={()=>redirectUrl(category)}
+                                    >
                                 </Tab>
                             )
                         })

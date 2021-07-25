@@ -1,10 +1,10 @@
 import { useContext } from 'react'
-import { useHistory } from 'react-router-dom'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 import { Grid, Container, Typography, Button } from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { Comments } from './Comments'
 import BlogContext from '../context/articles/context'
+import useHistoryPush from '../hooks/useHistoryPush'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -94,11 +94,11 @@ const useStyles = makeStyles((theme: Theme) =>
 export const ReadArticle = () => {
 
     const classes = useStyles()
-    const history = useHistory()
     const { article, readArticle } = useContext(BlogContext)
+    const { pushRedirect }  = useHistoryPush()
 
     const handleClickReturn = () => {
-        history.push(`/articles?selection=${article?.category}`)
+        pushRedirect(article?.category)
         readArticle(null!)
     }
     

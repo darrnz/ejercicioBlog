@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
-import { useLocation, useHistory } from 'react-router-dom'
 import { CircularProgress, Grid, Typography, Box, Button } from '@material-ui/core'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import CrudBtn from './CrudBtn'
 import ChatIcon from '@material-ui/icons/Chat';
 import BlogContext from '../context/articles/context' 
 import useUpdateList from '../hooks/useUpdateList'
+import useHistoryPush from '../hooks/useHistoryPush'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -135,20 +135,13 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Articles = () => {
     
-    const history = useHistory()
     const classes = useStyles();
-    const { search } = useLocation();
-    const match = search.match(/selection=(.*)/)
-    const type = match?.[1];
-
     const { posts, readArticle } = useContext(BlogContext)
     const [ UpdateList ] = useUpdateList()
+    const { pushRedirect, searchURLResult } = useHistoryPush()
+
 
     UpdateList()
-
-    console.log(match)
-    console.log(type)
-    console.log(posts)
 
     const handleSelectedArticleClick = (
         id:string, 
@@ -156,7 +149,7 @@ export const Articles = () => {
     ) => {
         event.preventDefault()
         readArticle(id)
-        history.push(`/articles/${id}`)
+        pushRedirect(id)
     }
 
     return (
@@ -168,7 +161,7 @@ export const Articles = () => {
                     </div> 
                 :
                 posts?.filter((article) => {
-                        return type === 'All' ? article : article.category === type
+                        return searchURLResult === 'All' ? article : article.category === searchURLResult
                     }).map((article, index) => {
                         return(
                             <Grid 
@@ -193,7 +186,7 @@ export const Articles = () => {
                                         >
                                         {
                                         <>
-                                            {article.comments.length <= 0 ? 
+                                            {article.comments.length <= 0 || article.comments === [] ? 
                                                 '' : 
                                                 <span className={classes.subtitles}>{article.comments.length} 
                                                     <ChatIcon style={{ fontSize: 15 }} /> Comments

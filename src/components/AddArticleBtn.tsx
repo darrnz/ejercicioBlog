@@ -38,6 +38,7 @@ export const AddArticleBtn = () => {
             {
             hovering? 
             <Fab 
+                onMouseLeave={handleHover}
                 variant="extended" 
                 color="secondary" 
                 aria-label="edit" 

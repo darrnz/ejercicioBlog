@@ -80,11 +80,11 @@ export const BlogContextProvider: React.FC = ({children}) => {
 
     const editArticle = async(updateArticleData: {[x: string]: any}) => {
         const { title, content, imgUrl, category } = updateArticleData
-        const responseUpdate = await fetch(`http://localhost:3004/posts/${state.article.id}`, {
+        const responseUpdate = await fetch(`http://localhost:3004/posts/${state.articleToEdit.id}`, {
             method:'PUT',
             headers: { 'Content-Type': 'application/json'},
             body: JSON.stringify({
-                ...state.article, title, content, imgUrl, category
+                ...state.articleToEdit, title, content, imgUrl, category
             })
         }).then(res => res.json())
         dispatch({
