@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import { useHistory } from 'react-router-dom'
 import { IconButton, Box } from '@material-ui/core'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
@@ -8,6 +7,7 @@ import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import BlogContext from '../context/articles/context' 
 import { ArticleStruct } from '../interfaces/interfaces';
 import useOpenModal from '../hooks/useOpenModal'
+import useHistoryPush from '../hooks/useHistoryPush'
 
 interface StateProps {
     mappedArticle: ArticleStruct
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
 function CrudBtn({ mappedArticle }: StateProps) {
 
     const classes = useStyles();
-    const history = useHistory()
+    const { pushArticle } = useHistoryPush()
     const { editMode } = useOpenModal()
     const { readArticle, deleteArticle, selectArticleToEdit } = useContext(BlogContext)
 
@@ -52,7 +52,7 @@ function CrudBtn({ mappedArticle }: StateProps) {
         switch(true) {
             case actions === 'read':
                 readArticle(id)
-                history.push(`/articles/${id}`)
+                pushArticle(id)
                 break;
             case actions === 'edit':
                 selectArticleToEdit(id)

@@ -138,7 +138,7 @@ export const Articles = () => {
     const classes = useStyles();
     const { posts, readArticle } = useContext(BlogContext)
     const [ UpdateList ] = useUpdateList()
-    const { pushRedirect, searchURLResult } = useHistoryPush()
+    const { pushArticle, searchURLResult } = useHistoryPush()
 
 
     UpdateList()
@@ -149,7 +149,7 @@ export const Articles = () => {
     ) => {
         event.preventDefault()
         readArticle(id)
-        pushRedirect(id)
+        pushArticle(id)
     }
 
     return (
@@ -208,9 +208,11 @@ export const Articles = () => {
                                             >
                                             {article.category.toUpperCase()}
                                         </Typography>
+
                                         <CrudBtn
                                             mappedArticle={article}
                                         />
+                                        
                                     </Box> 
                                     
                                 </Box> 

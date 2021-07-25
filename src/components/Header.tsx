@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom';
 import { Box, Container, Typography, AppBar, Tabs, Tab } from '@material-ui/core'
 import { makeStyles, Theme, createMuiTheme, ThemeProvider, responsiveFontSizes } from '@material-ui/core/styles';
 import { categories } from '../interfaces/interfaces'
+import useHistoryPush from '../hooks/useHistoryPush'
 
 function a11yProps(index: any) {
     return {
@@ -55,19 +55,15 @@ theme = responsiveFontSizes(theme);
 
 export const Header = () => {
 
-    const history = useHistory()
     const classes = useStyles();
     const [value, setValue] = useState(0)
+    const { pushSearch } = useHistoryPush()
 
     const handleChangeTab = (event: React.ChangeEvent<{}>, newValue: number) => {
         event.preventDefault()
         setValue(newValue);
     };
 
-    const redirectUrl = (categorySelected: string) => {
-        history.push(`/articles?selection=${categorySelected}`)
-    }
-    
     return (
         <ThemeProvider theme={theme}>
         <Container >
@@ -102,7 +98,7 @@ export const Header = () => {
                                     label={category} 
                                     className={classes.tab} 
                                     {...a11yProps(index)}
-                                    onClick={()=>redirectUrl(category)}
+                                    onClick={()=>pushSearch(category)}
                                     >
                                 </Tab>
                             )

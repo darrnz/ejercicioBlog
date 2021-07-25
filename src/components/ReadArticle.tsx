@@ -95,28 +95,28 @@ export const ReadArticle = () => {
 
     const classes = useStyles()
     const { article, readArticle } = useContext(BlogContext)
-    const { pushRedirect }  = useHistoryPush()
+    const { pushSearch }  = useHistoryPush()
 
     const handleClickReturn = () => {
-        pushRedirect(article?.category)
+        pushSearch(article?.category)
         readArticle(null!)
     }
     
     return (
         <Container className={classes.root}>
-            <Container className={classes.headContainer} style={{backgroundImage: `url(${article && article.imgUrl})`}}>
+            <Container className={classes.headContainer} style={{backgroundImage: `url(${article && article?.imgUrl})`}}>
                 <Grid container   direction="column" justify="space-evenly" alignItems="stretch">
                     <Grid item xs={12}>
                         <Button 
                             className={classes.backBtn} 
                             onClick={handleClickReturn}>
                             <ArrowBackIcon/>
-                            <strong>Back to {article.category} posts </strong>
+                            <strong>Back to {article?.category} posts </strong>
                         </Button>
                     </Grid>
                     <Grid item xs={12}>
-                        <Typography variant={'h2'}  className={classes.artTitle}>{article.title}</Typography>
-                        <Typography variant={'h5'}  className={classes.artAuthor}>By: <i>{article.author}</i></Typography>
+                        <Typography variant={'h2'}  className={classes.artTitle}>{article?.title}</Typography>
+                        <Typography variant={'h5'}  className={classes.artAuthor}>By: <i>{article?.author}</i></Typography>
                     </Grid>
                 </Grid>
             </Container>
@@ -124,8 +124,8 @@ export const ReadArticle = () => {
             <Container style={{backgroundColor: '#d1d1d1'}}>
 
                 <Container className={classes.contentContainer}>
-                    <Typography variant='h4'>{article.title}</Typography>
-                    <Typography variant='body1'>{article.content}</Typography>
+                    <Typography variant='h4'>{article?.title}</Typography>
+                    <Typography variant='body1'>{article?.content}</Typography>
                 </Container>
                 
                 <Comments/>

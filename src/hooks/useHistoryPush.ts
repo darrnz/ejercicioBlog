@@ -6,17 +6,17 @@ function useHistoryPush() {
     const  { search } = useLocation()
     const searchURLResult = search.match(/selection=(.*)/)?.[1]
 
-    const pushRedirect = (joinUrl: string) => {
-        if(!search) {
-            history.push(`/articles?selection=${joinUrl}`)
-        } else {
-            history.push(`/articles/${joinUrl}`)
-        }
-        
+    const pushSearch = (category: string) => {
+            history.push(`/articles?selection=${category}`)
+    }
+
+    const pushArticle = (id: string) => {
+        history.push(`/articles/${id}`)
     }
 
     return {
-        pushRedirect,
+        pushSearch,
+        pushArticle,
         searchURLResult
     } as const
 }

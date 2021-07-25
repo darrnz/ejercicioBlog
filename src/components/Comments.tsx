@@ -47,7 +47,7 @@ export const Comments = () => {
                 <Box>
                     <Grid container  direction="column" justify="space-around" alignItems="stretch" >
                         {
-                            article.comments.map((comment:any, index:any) => {
+                            article?.comments.map((comment:any, index:any) => {
                                 return(
                                     <>
                                     <Grid  key={index} item xs={12} className={classes.userCommentContainer}>
