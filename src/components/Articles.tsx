@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme: Theme) =>
                     transform: 'scale(1.1)',
                     transition: 'transform 6s cubic-bezier(0.25, 0.45, 0.45, 0.95)',
                 },
-                '& $crudBtn': {
+                '& $crudBtns': {
                     display: 'block'
                 }
             },
@@ -130,6 +130,12 @@ const useStyles = makeStyles((theme: Theme) =>
             justifyContent: 'space-between', 
             alignItems: 'center', 
         }, 
+        crudBtns: {
+            display: 'none',
+            [theme.breakpoints.down('sm')]: {
+                display: 'block'
+            },
+        },
     }),
 );
 
@@ -208,9 +214,11 @@ export const Articles = () => {
                                             {article.category.toUpperCase()}
                                         </Typography>
 
+                                        <Box className={classes.crudBtns}>
                                         <CrudBtn
                                             mappedArticle={article}
                                         />
+                                        </Box>
                                         
                                     </Box> 
                                     
