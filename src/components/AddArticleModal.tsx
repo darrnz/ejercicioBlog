@@ -3,9 +3,12 @@ import { Modal, FormControl, Select, MenuItem ,InputLabel, Typography, InputAdor
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { useForm, Controller } from "react-hook-form"
 import LinkIcon from '@material-ui/icons/Link';
-import { categories } from '../interfaces/interfaces'
+import { ArticleStruct, categories } from '../interfaces/interfaces'
 import BlogContext  from '../context/articles/context'
 import useOpenModal from '../hooks/useOpenModal'
+import { ArticleStructKeyTypes } from '../interfaces/interfaces'
+
+
 
 function getModalStyle() {
     const top = 50 
@@ -74,15 +77,36 @@ export const AddArticleModal = () => {
         closeModal()
     }
 
+    /////////PREGUNTAR////////
+    /* 
+    interface ArticleStruct {
+        -----> [key: string]: number | string | boolean | undefined | { author: string; comment: string; }[]
+        title: string,
+        content: string,
+        category: string,
+        comments: {
+            author: string,
+            comment: string
+        }[],
+        imgUrl: string,
+        author: string,
+        id: string
+    } */
     const setOriginalContent = () => {
-                const fields = Object.keys(articleToEdit)
-                /* fields.forEach((field) => {
-                    setValue(field, selectedArticleToRead[field])
-                })  */
-                setValue('title', articleToEdit.title)
-                setValue('content', articleToEdit.content)
-                setValue('category', articleToEdit.category)
-                setValue('imgUrl', articleToEdit.imgUrl)
+        ///ORIGINAL///
+        /* setValue('title', articleToEdit.title)
+        setValue('content', articleToEdit.content)
+        setValue('category', articleToEdit.category)
+        setValue('imgUrl', articleToEdit.imgUrl) */
+        ///////////////
+
+        //NUEVO///////
+        let fields = Object.keys(articleToEdit)
+        fields.forEach((field) => {
+            setValue(field, articleToEdit[field])
+        }) 
+        ////////////
+
     }
 
     useEffect(() => {

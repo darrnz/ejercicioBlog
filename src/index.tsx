@@ -10,7 +10,6 @@ ReactDOM.render(
     
     <BlogContextProvider>
     <AddEditBtnProvider>
-    
       <App />
     </AddEditBtnProvider>
     </BlogContextProvider>
