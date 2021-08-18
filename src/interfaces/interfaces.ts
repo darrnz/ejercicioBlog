@@ -8,7 +8,7 @@ export const categories: string[] = [
 ]
 
 export interface ArticleStruct {
-    [key: string]: number | string | boolean | undefined | { author: string; comment: string; }[]
+    //[key: string]: number | string | boolean | undefined | { author: string; comment: string; }[]
     title: string,
     content: string,
     category: string,

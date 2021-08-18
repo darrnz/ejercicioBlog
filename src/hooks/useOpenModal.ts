@@ -19,7 +19,6 @@ function useOpenModal() {
     const editMode = () => {
         toggleEditMode()
         setModalOpen()
-        
     }
 
     return { 

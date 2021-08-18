@@ -77,36 +77,11 @@ export const AddArticleModal = () => {
         closeModal()
     }
 
-    /////////PREGUNTAR////////
-    /* 
-    interface ArticleStruct {
-        -----> [key: string]: number | string | boolean | undefined | { author: string; comment: string; }[]
-        title: string,
-        content: string,
-        category: string,
-        comments: {
-            author: string,
-            comment: string
-        }[],
-        imgUrl: string,
-        author: string,
-        id: string
-    } */
     const setOriginalContent = () => {
-        ///ORIGINAL///
-        /* setValue('title', articleToEdit.title)
+        setValue('title', articleToEdit.title)
         setValue('content', articleToEdit.content)
         setValue('category', articleToEdit.category)
-        setValue('imgUrl', articleToEdit.imgUrl) */
-        ///////////////
-
-        //NUEVO///////
-        let fields = Object.keys(articleToEdit)
-        fields.forEach((field) => {
-            setValue(field, articleToEdit[field])
-        }) 
-        ////////////
-
+        setValue('imgUrl', articleToEdit.imgUrl)
     }
 
     useEffect(() => {
